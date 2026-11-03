@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Einsatz &amp; Rapport – Berner Oberland Charterschiff AG</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Figtree:wght@400;500;600&display=swap">
+<style>
+:root{--bg:#EDF2F4;--sf:#fff;--ink:#0F2230;--mut:#5B6F7C;--ln:#D2DCE2;--pri:#0E4A6B;--pri-ink:#fff;--acc:#B27A1C;--bad:#B3402F;--ok:#2B7A57;--tint:#E3EDF2;--abs:#D9A441;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0C1A22;--sf:#14262F;--ink:#E6EEF2;--mut:#93A8B3;--ln:#25404C;--pri:#5DB1DC;--pri-ink:#07202D;--acc:#E0B04F;--bad:#F08A78;--ok:#6CC49B;--tint:#1B323D;--abs:#B8862B;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0C1A22;--sf:#14262F;--ink:#E6EEF2;--mut:#93A8B3;--ln:#25404C;--pri:#5DB1DC;--pri-ink:#07202D;--acc:#E0B04F;--bad:#F08A78;--ok:#6CC49B;--tint:#1B323D;--abs:#B8862B;color-scheme:dark}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.4 "Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;padding-bottom:84px;-webkit-text-size-adjust:100%}
+body.lock{overflow:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--pri);z-index:30}
+h1,h2,h3{font-family:"Bricolage Grotesque","Figtree",system-ui,sans-serif;margin:0}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--pri);color:var(--pri-ink);padding:10px 16px 12px}
+header small{display:block;opacity:.8;font-size:12px}
+header h1{font-size:20px;line-height:1.2}
+main{padding:12px;max-width:900px;margin:0 auto}
+nav{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;background:var(--sf);border-top:1px solid var(--ln);padding-bottom:env(safe-area-inset-bottom,0px)}
+nav button{flex:1;border:0;background:none;color:var(--mut);padding:9px 0 8px;font:600 12px "Figtree",sans-serif;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer}
+nav button svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+nav button.on{color:var(--pri)}
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:12px;padding:12px;margin-bottom:12px}
+.card h2{font-size:16px;margin-bottom:8px}
+.muted{color:var(--mut);font-size:13px}
+.btn{border:1px solid var(--pri);background:var(--pri);color:var(--pri-ink);border-radius:10px;padding:10px 14px;font:600 14px "Figtree",sans-serif;cursor:pointer;min-height:42px}
+.btn.sec{background:transparent;color:var(--pri)}
+.btn.bad{background:transparent;color:var(--bad);border-color:var(--bad)}
+.btn.sm{padding:6px 10px;min-height:34px;font-size:13px}
+.btn.full{width:100%}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.seg{display:flex;background:var(--tint);border-radius:10px;padding:3px;gap:3px;margin-bottom:12px}
+.seg button{flex:1;border:0;background:none;color:var(--mut);padding:8px;border-radius:8px;font:600 14px "Figtree",sans-serif;cursor:pointer}
+.seg button.on{background:var(--sf);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.15)}
+.fld{margin-bottom:10px}
+.fld>label{display:block;font-size:13px;color:var(--mut);margin-bottom:3px;font-weight:500}
+input,select,textarea{width:100%;font:16px "Figtree",sans-serif;background:var(--bg);color:var(--ink);border:1px solid var(--ln);border-radius:8px;padding:9px 10px;min-height:42px}
+input[type=checkbox]{width:auto;min-height:0}
+input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible{outline:2px solid var(--pri);outline-offset:1px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.list .it{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--ln);cursor:pointer}
+.list .it:last-child{border-bottom:0}
+.dot{width:10px;height:10px;border-radius:50%;flex:none;margin-top:6px}
+.it .g{flex:1;min-width:0}
+.it .t{font-weight:600}
+.it .v{font-weight:600;white-space:nowrap}
+.day{font-family:"Bricolage Grotesque",sans-serif;font-weight:600;font-size:13px;color:var(--mut);margin:14px 0 2px}
+.tag{display:inline-block;font-size:11px;font-weight:600;border-radius:6px;padding:1px 6px;background:var(--tint);color:var(--mut);margin-left:4px}
+.tag.bad{background:transparent;border:1px solid var(--bad);color:var(--bad)}
+.tag.ok{background:transparent;border:1px solid var(--ok);color:var(--ok)}
+.timer{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.big{font-family:"Bricolage Grotesque",sans-serif;font-size:30px;font-weight:700}
+.sum{display:flex;gap:16px;margin-bottom:10px}
+.sum div{flex:1}.sum b{display:block;font:700 20px "Bricolage Grotesque",sans-serif}
+.chip{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--ln);border-radius:999px;padding:5px 10px;font-size:13px;background:var(--sf);cursor:pointer;color:var(--ink)}
+.chip.on{background:var(--pri);color:var(--pri-ink);border-color:var(--pri)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.wd{display:flex;gap:6px}
+.wd label{flex:1;text-align:center;border:1px solid var(--ln);border-radius:8px;padding:8px 0;cursor:pointer;font-weight:600;font-size:13px;color:var(--mut)}
+.wd input{display:none}
+.wd input:checked+span{color:var(--pri-ink)}
+.wd label:has(input:checked){background:var(--pri);border-color:var(--pri);color:var(--pri-ink)}
+/* Plan */
+.grid-wrap{overflow-x:auto;border:1px solid var(--ln);border-radius:10px;background:var(--sf)}
+.g{display:inline-block;min-width:100%}
+.gr{display:flex;height:34px;border-bottom:1px solid var(--ln)}
+.gr.hd{height:auto;min-height:20px}
+.gn{position:sticky;left:0;z-index:2;flex:none;width:92px;background:var(--sf);border-right:1px solid var(--ln);padding:0 6px;display:flex;align-items:center;font-size:12px;font-weight:600;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.gc{flex:none;width:var(--cw);border-right:1px solid color-mix(in srgb,var(--ln) 55%,transparent);position:relative;cursor:pointer}
+.gc.we{background-image:linear-gradient(color-mix(in srgb,var(--mut) 14%,transparent),color-mix(in srgb,var(--mut) 14%,transparent))}
+.gc.as{border-right-color:rgba(255,255,255,.35)}
+.gc.ab{background-image:repeating-linear-gradient(45deg,var(--abs) 0 3px,transparent 3px 6px)}
+.gc.bl{background-image:linear-gradient(color-mix(in srgb,var(--bad) 22%,transparent),color-mix(in srgb,var(--bad) 22%,transparent))}
+.gc.as.we{background-image:linear-gradient(rgba(255,255,255,.25),rgba(255,255,255,.25))}
+.gc.x{box-shadow:inset 0 0 0 2px var(--bad)}
+.gc.td{border-left:2px solid var(--acc)}
+.gh{flex:none;width:var(--cw);text-align:center;font-size:10px;line-height:1.15;color:var(--mut);padding:2px 0;border-right:1px solid color-mix(in srgb,var(--ln) 55%,transparent)}
+.gh b{display:block;font-size:12px;color:var(--ink)}
+.gh.we{background:color-mix(in srgb,var(--mut) 14%,transparent)}
+.gm{flex:none;font:600 11px "Figtree",sans-serif;padding:3px 4px;border-right:1px solid var(--ln);overflow:hidden;white-space:nowrap}
+.gb{background-image:repeating-linear-gradient(45deg,var(--bad) 0 3px,transparent 3px 6px)}
+.leg{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:12px;color:var(--mut);margin:8px 0}
+.leg i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-2px;margin-right:4px}
+table.t{width:100%;border-collapse:collapse;font-size:13px}
+table.t th,table.t td{padding:6px 4px;border-bottom:1px solid var(--ln);text-align:left}
+table.t td.r,table.t th.r{text-align:right}
+/* Sheet */
+#sheet[hidden]{display:none}
+.sh-back{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:40}
+.sh{position:fixed;left:0;right:0;bottom:0;z-index:41;background:var(--sf);border-radius:16px 16px 0 0;max-height:92%;display:flex;flex-direction:column;max-width:700px;margin:0 auto;padding-bottom:env(safe-area-inset-bottom,0px)}
+.sh-h{display:flex;justify-content:space-between;align-items:center;padding:14px 16px 8px;font:700 17px "Bricolage Grotesque",sans-serif}
+.sh-h .x{border:0;background:none;font-size:20px;color:var(--mut);cursor:pointer;padding:4px 8px}
+.sh-b{overflow-y:auto;padding:4px 16px 18px}
+.warn{background:color-mix(in srgb,var(--bad) 12%,transparent);border:1px solid var(--bad);border-radius:8px;padding:8px 10px;font-size:13px;margin:8px 0}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:9px 14px;border-radius:10px;font-size:14px;z-index:60;max-width:90%}
+#toast[hidden]{display:none}
+.thumb{width:56px;height:56px;object-fit:cover;border-radius:8px;border:1px solid var(--ln);flex:none}
+.prev{max-width:100%;max-height:240px;border-radius:8px;border:1px solid var(--ln);margin-top:6px}
+.empty{text-align:center;padding:22px 10px;color:var(--mut)}
+@media print{body *{visibility:hidden}#rep,#rep *{visibility:visible}#rep{position:absolute;left:0;top:0;width:100%}body::before{display:none}}
+</style>
+</head>
+<body>
+<header><small id="co"></small><h1 id="ttl"></h1></header>
+<main id="app"></main>
+<div id="sheet" hidden></div>
+<div id="toast" hidden></div>
+<nav>
+ <button data-a="tab" data-t="time"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></svg>Erfassen</button>
+ <button data-a="tab" data-t="plan"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M7 15h4"/></svg>Planung</button>
+ <button data-a="tab" data-t="rep"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h7"/></svg>Rapport</button>
+ <button data-a="tab" data-t="data"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1.2l2-1.5-2-3.4-2.3 1a7 7 0 0 0-2-1.2L14.3 3h-4l-.4 2.7a7 7 0 0 0-2 1.2l-2.3-1-2 3.4 2 1.5A7 7 0 0 0 5 12c0 .4 0 .8.1 1.2l-2 1.5 2 3.4 2.3-1a7 7 0 0 0 2 1.2l.4 2.7h4l.4-2.7a7 7 0 0 0 2-1.2l2.3 1 2-3.4-2-1.5c.1-.4.1-.8.1-1.2z"/></svg>Daten</button>
+</nav>
+<script>
+"use strict";
+/* ---------- Helfer ---------- */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const uid=()=>Math.random().toString(36).slice(2,9)+Date.now().toString(36).slice(-3);
+const pad=n=>String(n).padStart(2,"0");
+const iso=d=>d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
+const parse=s=>{const [y,m,d]=s.split("-").map(Number);return new Date(y,m-1,d)};
+const addDays=(s,n)=>{const d=parse(s);d.setDate(d.getDate()+n);return iso(d)};
+const today=()=>iso(new Date());
+const nowT=()=>{const d=new Date();return pad(d.getHours())+":"+pad(d.getMinutes())};
+const WD=["So","Mo","Di","Mi","Do","Fr","Sa"];
+const MON=["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
+const fmtD=s=>{const d=parse(s);return pad(d.getDate())+"."+pad(d.getMonth()+1)+"."+d.getFullYear()};
+const fmtS=s=>{const d=parse(s);return WD[d.getDay()]+" "+pad(d.getDate())+"."+pad(d.getMonth()+1)+"."};
+const nf=new Intl.NumberFormat("de-CH",{minimumFractionDigits:2,maximumFractionDigits:2});
+const chf=n=>nf.format(n||0);
+const mins=(a,b)=>{const [h1,m1]=a.split(":").map(Number),[h2,m2]=b.split(":").map(Number);let d=(h2*60+m2)-(h1*60+m1);if(d<=0)d+=1440;return d};
+const hrs=t=>Math.max(0,mins(t.s,t.e)-(t.b||0))/60;
+const eachDay=(f,t)=>{const r=[];let d=f;while(d<=t){r.push(d);d=addDays(d,1)}return r};
+const monthStart=s=>s.slice(0,8)+"01";
+const monthEnd=s=>{const d=parse(s);return iso(new Date(d.getFullYear(),d.getMonth()+1,0))};
+const PAL=["#0E6BA8","#2E8B6E","#B27A1C","#8A4FA0","#C2523B","#3E7F8C","#6B7A2A","#A24B6B"];
+
+/* ---------- Daten ---------- */
+const KEY="bocsag-einsatz-v1";
+const DEF=()=>({v:1,company:"Berner Oberland Charterschiff AG",me:"",
+ locations:[{id:"l1",name:"MS Oberhofen (an Bord)",color:PAL[0]},{id:"l2",name:"Hofstetten-Ländte",color:PAL[1]},{id:"l3",name:"Büro Thun",color:PAL[2]}],
+ activities:[{id:"a1",name:"Fahrt / Schiffsführung"},{id:"a2",name:"Service an Bord"},{id:"a3",name:"Catering"},{id:"a4",name:"Reinigung & Unterhalt"},{id:"a5",name:"Vorbereitung & Büro"},{id:"a6",name:"Werft / Winterunterhalt"}],
+ cats:[{id:"c1",name:"Verpflegung"},{id:"c2",name:"Treibstoff"},{id:"c3",name:"Material"},{id:"c4",name:"Reise / Parkplatz"},{id:"c5",name:"Übernachtung"},{id:"c6",name:"Sonstiges"}],
+ employees:[],absences:[],blocks:[],assigns:[],times:[],exps:[],reports:[],timer:null,last:{},
+ ui:{tab:"time",sub:"zeit",all:false,planStart:today().slice(0,7),span:1,rf:null}});
+function load(){try{const r=localStorage.getItem(KEY);return r?JSON.parse(r):null}catch(e){return null}}
+let S=Object.assign(DEF(),load()||{});
+S.ui=Object.assign(DEF().ui,S.ui||{});
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){toast("Speichern im Browser nicht möglich")}}
+const idb={db:null,mem:{},
+ async open(){if(this.db)return this.db;try{this.db=await new Promise((res,rej)=>{const r=indexedDB.open("bocsag-belege",1);r.onupgradeneeded=()=>r.result.createObjectStore("r");r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}catch(e){this.db=null}return this.db},
+ async tx(mode,fn){const db=await this.open();if(!db)return null;return new Promise(res=>{try{const q=fn(db.transaction("r",mode).objectStore("r"));q.onsuccess=()=>res(q.result);q.onerror=()=>res(null)}catch(e){res(null)}})},
+ async put(k,v){const db=await this.open();if(!db){this.mem[k]=v;return}await this.tx("readwrite",s=>s.put(v,k))},
+ async get(k){const db=await this.open();if(!db)return this.mem[k]||null;return this.tx("readonly",s=>s.get(k))},
+ async del(k){const db=await this.open();if(!db){delete this.mem[k];return}await this.tx("readwrite",s=>s.delete(k))}};
+const byId=(arr,id)=>arr.find(x=>x.id===id);
+const empName=id=>(byId(S.employees,id)||{name:"?"}).name;
+const locOf=id=>byId(S.locations,id)||{name:"–",color:"#888"};
+const actName=id=>(byId(S.activities,id)||{name:"–"}).name;
+const catName=id=>(byId(S.cats,id)||{name:"–"}).name;
+if(!S.me&&S.employees[0])S.me=S.employees[0].id;
+let toastT;function toast(m){const t=$("#toast");t.textContent=m;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>t.hidden=true,2600)}
+
+/* ---------- UI-Bausteine ---------- */
+const opts=(list,sel,blank)=>(blank!=null?`<option value="">${esc(blank)}</option>`:"")+list.map(x=>`<option value="${esc(x.id)}"${x.id===sel?" selected":""}>${esc(x.name)}</option>`).join("");
+const fld=(l,i)=>`<div class="fld"><label>${l}</label>${i}</div>`;
+const empOpts=()=>S.employees.filter(e=>e.active!==false);
+function sheet(title,body){$("#sheet").innerHTML=`<div class="sh-back" data-a="close"></div><div class="sh" role="dialog" aria-label="${esc(title)}"><div class="sh-h"><span>${title}</span><button class="x" data-a="close" aria-label="Schliessen">✕</button></div><div class="sh-b">${body}</div></div>`;$("#sheet").hidden=false;document.body.classList.add("lock")}
+function closeSheet(){$("#sheet").hidden=true;$("#sheet").innerHTML="";document.body.classList.remove("lock");pendingR=undefined}
+let askCb=null;
+function ask(msg,ok,cb){askCb=cb;sheet("Bitte bestätigen",`<p>${msg}</p><div class="btns"><button class="btn bad" data-a="askok">${ok}</button><button class="btn sec" data-a="close">Abbrechen</button></div>`)}
+function showText(title,text){sheet(title,`<p class="muted">Direktes Speichern ist hier nicht verfügbar. Text markieren und kopieren:</p><textarea rows="12" readonly onclick="this.select()">${esc(text)}</textarea>`)}
+async function dl(filename,text,type){
+ let d=null;try{d=window.claude?await window.claude.use("downloads"):null}catch(e){}
+ if(!d){showText(filename,text);return}
+ try{await d.save({filename,data:new Blob([text],{type})})}catch(e){if(e&&e.code!=="declined")showText(filename,text)}}
+function resizeImage(file,max=1400,q=.72){return new Promise((res,rej)=>{const url=URL.createObjectURL(file);const img=new Image();img.onload=()=>{const sc=Math.min(1,max/Math.max(img.width,img.height));const c=document.createElement("canvas");c.width=Math.round(img.width*sc);c.height=Math.round(img.height*sc);c.getContext("2d").drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(url);res(c.toDataURL("image/jpeg",q))};img.onerror=()=>{URL.revokeObjectURL(url);rej()};img.src=url})}
+let pendingR;
+
+/* ---------- Render ---------- */
+function render(){
+ const old=document.querySelector(".grid-wrap");const sl=old?old.scrollLeft:0;
+ document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.t===S.ui.tab));
+ $("#co").textContent=S.company;
+ $("#ttl").textContent={time:"Erfassen",plan:"Einsatzplanung",rep:"Rapport & Abrechnung",data:"Stammdaten"}[S.ui.tab];
+ $("#app").innerHTML={time:viewTime,plan:viewPlan,rep:viewRep,data:viewData}[S.ui.tab]();
+ const w=document.querySelector(".grid-wrap");
+ if(w){if(scrollToday){const td=w.querySelector(".gh.td,.gc.td");if(td)w.scrollLeft=Math.max(0,td.offsetLeft-120);scrollToday=false}else w.scrollLeft=sl}
+ if(S.ui.tab==="rep")fillReport();
+}
+let scrollToday=false;
+const emptySetup=()=>`<div class="card empty"><h2>Los geht’s</h2><p>Erfasse zuerst die Mitarbeitenden unter «Daten». Standorte, Tätigkeiten und Spesenarten sind für das Charterschiff bereits vorbereitet.</p><div class="btns" style="justify-content:center"><button class="btn" data-a="tab" data-t="data">Mitarbeitende erfassen</button><button class="btn sec" data-a="demo">Beispieldaten laden</button></div></div>`;
+
+/* ---------- Erfassen ---------- */
+function viewTime(){
+ if(!S.employees.length)return emptySetup();
+ if(!byId(S.employees,S.me))S.me=S.employees[0].id;
+ const L=S.last||{};const t=S.timer;
+ let timer;
+ if(t){timer=`<div class="timer"><div><div class="muted">Läuft seit ${(d=>pad(d.getHours())+":"+pad(d.getMinutes()))(new Date(t.start))} · ${esc(locOf(t.loc).name)}</div><div class="big" id="elapsed">${elapsed()}</div><div class="muted">${esc(actName(t.act))}</div></div></div><div class="btns"><button class="btn" data-a="timerstop">Stopp &amp; speichern</button><button class="btn sec" data-a="timerdrop">Verwerfen</button></div>`}
+ else{timer=`<div class="row2">${fld("Standort",`<select id="tl">${opts(S.locations,L.loc)}</select>`)}${fld("Tätigkeit",`<select id="ta">${opts(S.activities,L.act)}</select>`)}</div><button class="btn full" data-a="timerstart">Arbeitszeit starten</button>`}
+ const ms=monthStart(today()),me=monthEnd(today());
+ const mine=x=>S.ui.all||x.emp===S.me;
+ const mh=S.times.filter(x=>x.emp===S.me&&x.date>=ms&&x.date<=me).reduce((a,x)=>a+hrs(x),0);
+ const mx=S.exps.filter(x=>x.emp===S.me&&x.date>=ms&&x.date<=me).reduce((a,x)=>a+x.amt,0);
+ let list="";
+ if(S.ui.sub==="zeit"){
+  const L2=S.times.filter(mine).sort((a,b)=>(b.date+b.s).localeCompare(a.date+a.s)).slice(0,80);
+  let cur="";
+  list=L2.map(x=>{let h="";if(x.date!==cur){cur=x.date;h=`<div class="day">${fmtS(x.date)}</div>`}
+   return h+`<div class="it" data-a="edittime" data-id="${x.id}"><span class="dot" style="background:${locOf(x.loc).color}"></span><div class="g"><div class="t">${esc(actName(x.act))}${x.rep?`<span class="tag ok">${esc(x.rep)}</span>`:""}</div><div class="muted">${S.ui.all?esc(empName(x.emp))+" · ":""}${esc(x.s)}–${esc(x.e)} · ${esc(locOf(x.loc).name)}${x.note?" · "+esc(x.note):""}</div></div><div class="v">${chf(hrs(x))} h</div></div>`}).join("")||`<div class="empty">Noch keine Zeiten erfasst.</div>`;
+ }else{
+  const L2=S.exps.filter(mine).sort((a,b)=>b.date.localeCompare(a.date)).slice(0,80);
+  let cur="";
+  list=L2.map(x=>{let h="";if(x.date!==cur){cur=x.date;h=`<div class="day">${fmtS(x.date)}</div>`}
+   return h+`<div class="it" data-a="editexp" data-id="${x.id}"><span class="dot" style="background:${locOf(x.loc).color}"></span><div class="g"><div class="t">${esc(catName(x.cat))}${x.r?"":`<span class="tag bad">Beleg fehlt</span>`}${x.rep?`<span class="tag ok">${esc(x.rep)}</span>`:""}</div><div class="muted">${S.ui.all?esc(empName(x.emp))+" · ":""}${esc(locOf(x.loc).name)} · ${x.paid==="firma"?"Firmenkarte":"privat ausgelegt"}${x.note?" · "+esc(x.note):""}</div></div><div class="v">CHF ${chf(x.amt)}</div></div>`}).join("")||`<div class="empty">Noch keine Spesen erfasst.</div>`;
+ }
+ return `<div class="card"><div class="fld"><label>Mitarbeiter/in</label><select data-c="me">${opts(empOpts(),S.me)}</select></div>${timer}</div>
+ <div class="card"><div class="sum"><div class="muted">${MON[new Date().getMonth()]}<b>${chf(mh)} h</b></div><div class="muted">Spesen<b>CHF ${chf(mx)}</b></div></div>
+ <div class="seg"><button class="${S.ui.sub==="zeit"?"on":""}" data-a="sub" data-s="zeit">Zeiten</button><button class="${S.ui.sub==="exp"?"on":""}" data-a="sub" data-s="exp">Spesen</button></div>
+ <div class="btns"><button class="btn" data-a="${S.ui.sub==="zeit"?"newtime":"newexp"}">${S.ui.sub==="zeit"?"Zeit nachtragen":"Spesen erfassen"}</button><button class="chip ${S.ui.all?"on":""}" data-a="toggleall">Alle anzeigen</button></div>
+ <div class="list">${list}</div></div>`;
+}
+function elapsed(){const t=S.timer;if(!t)return"";const m=Math.floor((Date.now()-new Date(t.start).getTime())/60000);return Math.floor(m/60)+":"+pad(m%60)+" h"}
+setInterval(()=>{const e=$("#elapsed");if(e)e.textContent=elapsed()},20000);
+
+function timeForm(t){t=t||{};const lock=t.rep;
+ return `${lock?`<div class="warn">Abgerechnet in ${esc(t.rep)} – gesperrt.</div>`:""}<form data-f="time" data-id="${t.id||""}"><fieldset ${lock?"disabled":""} style="border:0;padding:0;margin:0">
+ ${fld("Mitarbeiter/in",`<select name="emp">${opts(empOpts(),t.emp||S.me)}</select>`)}
+ ${fld("Datum",`<input type="date" name="date" value="${t.date||today()}" required>`)}
+ <div class="row3">${fld("Von",`<input type="time" name="s" value="${t.s||"08:00"}" required>`)}${fld("Bis",`<input type="time" name="e" value="${t.e||"16:00"}" required>`)}${fld("Pause (Min.)",`<input type="number" name="b" min="0" step="5" value="${t.b||0}" inputmode="numeric">`)}</div>
+ <div class="muted" id="calc"></div>
+ ${fld("Standort",`<select name="loc">${opts(S.locations,t.loc||(S.last||{}).loc)}</select>`)}
+ ${fld("Tätigkeit",`<select name="act">${opts(S.activities,t.act||(S.last||{}).act)}</select>`)}
+ ${fld("Bemerkung",`<input name="note" value="${esc(t.note||"")}" placeholder="z. B. Hochzeit Meier, 40 Gäste">`)}
+ <div class="btns"><button class="btn" type="submit">Speichern</button>${t.id?`<button type="button" class="btn bad" data-a="deltime" data-id="${t.id}">Löschen</button>`:""}</div></fieldset></form>`}
+function calcHint(f){const s=f.s.value,e=f.e.value;if(!s||!e)return;if(s===e){$("#calc").textContent="Von und Bis sind gleich.";return}$("#calc").textContent="= "+chf(Math.max(0,mins(s,e)-(+f.b.value||0))/60)+" Stunden"+(e<s?" (über Mitternacht)":"")}
+
+function expForm(x){x=x||{};const lock=x.rep;
+ pendingR=undefined;
+ return `${lock?`<div class="warn">Abgerechnet in ${esc(x.rep)} – gesperrt.</div>`:""}<form data-f="exp" data-id="${x.id||""}"><fieldset ${lock?"disabled":""} style="border:0;padding:0;margin:0">
+ ${fld("Mitarbeiter/in",`<select name="emp">${opts(empOpts(),x.emp||S.me)}</select>`)}
+ <div class="row2">${fld("Datum",`<input type="date" name="date" value="${x.date||today()}" required>`)}${fld("Betrag CHF",`<input type="number" name="amt" step="0.05" min="0" inputmode="decimal" value="${x.amt??""}" required>`)}</div>
+ <div class="row2">${fld("Art",`<select name="cat">${opts(S.cats,x.cat)}</select>`)}${fld("Standort",`<select name="loc">${opts(S.locations,x.loc||(S.last||{}).loc)}</select>`)}</div>
+ ${fld("Bezahlt mit",`<select name="paid"><option value="privat"${x.paid!=="firma"?" selected":""}>Privat ausgelegt (Rückerstattung)</option><option value="firma"${x.paid==="firma"?" selected":""}>Firmenkarte / Rechnung</option></select>`)}
+ ${fld("Beschreibung",`<input name="note" value="${esc(x.note||"")}" placeholder="z. B. Diesel für Begleitboot">`)}
+ ${fld("Beleg (Foto)",`<input type="file" name="rcpt" accept="image/*" capture="environment"><div id="rprev">${x.r?`<span class="muted">Beleg gespeichert.</span>`:""}</div>`)}
+ <div class="btns"><button class="btn" type="submit">Speichern</button>${x.r?`<button type="button" class="btn sec" data-a="showrcpt" data-id="${x.id}">Beleg ansehen</button>`:""}${x.id?`<button type="button" class="btn bad" data-a="delexp" data-id="${x.id}">Löschen</button>`:""}</div></fieldset></form>`}
+
+/* ---------- Planung ---------- */
+function planRange(){const [y,m]=S.ui.planStart.split("-").map(Number);return{from:iso(new Date(y,m-1,1)),to:iso(new Date(y,m-1+S.ui.span,0))}}
+function stateOf(A,AB,B,d){
+ const wd=parse(d).getDay();
+ const as=A.filter(a=>a.from<=d&&d<=a.to&&a.wd.includes(wd));
+ const ab=AB.find(x=>x.from<=d&&d<=x.to);
+ const bl=B.filter(b=>b.from<=d&&d<=b.to);
+ const c=[];
+ if(as.length&&ab)c.push("abs");
+ if(as.some(a=>bl.some(b=>!b.loc||b.loc===a.loc)))c.push("blk");
+ if(as.length>1)c.push("dbl");
+ return{as,ab,bl,c};
+}
+const ctx=e=>({A:S.assigns.filter(a=>a.emp===e),AB:S.absences.filter(a=>a.emp===e),B:S.blocks.filter(b=>!b.emp||b.emp===e)});
+function viewPlan(){
+ if(!S.employees.length)return emptySetup();
+ const {from,to}=planRange();const days=eachDay(from,to);
+ const cw=S.ui.span===1?30:S.ui.span===3?10:6;const td=today();
+ const [y,m]=S.ui.planStart.split("-").map(Number);
+ const ttl=S.ui.span===1?`${MON[m-1]} ${y}`:`${MON[m-1].slice(0,3)} – ${MON[(m-2+S.ui.span)%12].slice(0,3)} ${new Date(y,m-2+S.ui.span,1).getFullYear()}`;
+ let head;
+ if(S.ui.span===1)head=`<div class="gr hd"><div class="gn"></div>${days.map(d=>{const w=parse(d).getDay();return `<div class="gh ${w%6===0?"we":""} ${d===td?"td":""}">${WD[w]}<b>${+d.slice(8)}</b></div>`}).join("")}</div>`;
+ else{let ms="";for(let k=0;k<S.ui.span;k++){const dd=new Date(y,m-1+k,1);const n=new Date(y,m+k,0).getDate();ms+=`<div class="gm" style="width:${n*cw}px">${MON[dd.getMonth()]}${k===0||dd.getMonth()===0?" "+dd.getFullYear():""}</div>`}head=`<div class="gr hd"><div class="gn"></div>${ms}</div>`}
+ const gb=S.blocks.filter(b=>!b.emp);
+ const brow=`<div class="gr"><div class="gn" title="Sperrzeiten">Sperren</div>${days.map(d=>`<div class="gc ${S.blocks.some(b=>b.from<=d&&d<=b.to)?"gb":""}" data-a="blockday" data-d="${d}"></div>`).join("")}</div>`;
+ const rows=empOpts().map(e=>{const c=ctx(e.id);return `<div class="gr"><div class="gn">${esc(e.short||e.name)}</div>${days.map(d=>{const st=stateOf(c.A,c.AB,c.B,d);const w=parse(d).getDay();
+  const gl=!st.as.length&&st.bl.some(b=>!b.loc);
+  const cls=["gc",w%6===0?"we":"",st.as.length?"as":"",st.ab?"ab":"",gl?"bl":"",st.c.length?"x":"",d===td?"td":""].join(" ");
+  const bg=st.as.length?`background-color:${locOf(st.as[0].loc).color};`:"";
+  return `<div class="${cls}" style="${bg}" data-a="day" data-e="${e.id}" data-d="${d}"></div>`}).join("")}</div>`}).join("");
+ // Konflikte & Summen
+ const conf=[];const sumr=empOpts().map(e=>{const c=ctx(e.id);let ad=0,ab=0,hh=0;const runs={};
+  days.forEach(d=>{const st=stateOf(c.A,c.AB,c.B,d);if(st.as.length){ad++;hh+=st.as.reduce((a,x)=>a+(+x.h||0),0)}if(st.ab)ab++;
+   st.c.forEach(k=>{const r=runs[k]||(runs[k]=[]);const l=r[r.length-1];if(l&&addDays(l[1],1)===d)l[1]=d;else r.push([d,d])})});
+  Object.entries(runs).forEach(([k,r])=>r.forEach(x=>conf.push({e:e.id,k,from:x[0],to:x[1]})));
+  return `<tr><td>${esc(e.name)}</td><td class="r">${ad}</td><td class="r">${chf(hh)}</td><td class="r">${ab}</td></tr>`}).join("");
+ const KT={abs:"Einsatz trotz Absenz",blk:"Einsatz in Sperrzeit",dbl:"Doppelt eingeplant"};
+ const confH=conf.length?conf.map(c=>`<div class="it" data-a="day" data-e="${c.e}" data-d="${c.from}"><span class="dot" style="background:var(--bad)"></span><div class="g"><div class="t">${esc(empName(c.e))}</div><div class="muted">${KT[c.k]} · ${c.from===c.to?fmtD(c.from):fmtD(c.from)+" – "+fmtD(c.to)}</div></div></div>`).join(""):`<div class="muted">Keine Konflikte im Zeitraum.</div>`;
+ return `<div class="card"><div class="seg">${[1,3,6].map(n=>`<button class="${S.ui.span===n?"on":""}" data-a="span" data-n="${n}">${n} Mt.</button>`).join("")}</div>
+ <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><button class="btn sec sm" data-a="pnav" data-n="-1" aria-label="zurück">‹</button><b style="font-family:'Bricolage Grotesque',sans-serif">${ttl}</b><button class="btn sec sm" data-a="pnav" data-n="1" aria-label="weiter">›</button></div>
+ <div class="grid-wrap" style="--cw:${cw}px"><div class="g">${head}${brow}${rows}</div></div>
+ <div class="leg">${S.locations.map(l=>`<span><i style="background:${l.color}"></i>${esc(l.name)}</span>`).join("")}<span><i style="background:repeating-linear-gradient(45deg,var(--abs) 0 3px,transparent 3px 6px);border:1px solid var(--ln)"></i>Absenz</span><span><i style="background:repeating-linear-gradient(45deg,var(--bad) 0 3px,transparent 3px 6px)"></i>Sperrzeit</span><span><i style="box-shadow:inset 0 0 0 2px var(--bad)"></i>Konflikt</span></div>
+ <div class="btns"><button class="btn" data-a="newassign">Einsatz</button><button class="btn sec" data-a="newabs">Absenz</button><button class="btn sec" data-a="newblock">Sperrzeit</button></div></div>
+ <div class="card"><h2>Konflikte (${conf.length})</h2><div class="list">${confH}</div></div>
+ <div class="card"><h2>Auslastung im Zeitraum</h2><table class="t"><tr><th>Mitarbeiter/in</th><th class="r">Einsatztage</th><th class="r">Soll-Std.</th><th class="r">Absenztage</th></tr>${sumr}</table></div>
+ <div class="card"><h2>Alle Einträge</h2><div class="list">${planList()}</div></div>`;
+}
+function planList(){
+ const it=[];
+ S.assigns.forEach(a=>it.push({k:"as",o:a,d:a.from}));S.absences.forEach(a=>it.push({k:"ab",o:a,d:a.from}));S.blocks.forEach(a=>it.push({k:"bl",o:a,d:a.from}));
+ it.sort((a,b)=>a.d.localeCompare(b.d));
+ return it.map(x=>{const o=x.o;const r=`${fmtD(o.from)} – ${fmtD(o.to)}`;
+  if(x.k==="as")return `<div class="it" data-a="editassign" data-id="${o.id}"><span class="dot" style="background:${locOf(o.loc).color}"></span><div class="g"><div class="t">${esc(empName(o.emp))} · ${esc(locOf(o.loc).name)}</div><div class="muted">${r} · ${o.wd.slice().sort((p,q)=>(p||7)-(q||7)).map(d=>WD[d]).join(" ")} · ${o.h} h/Tag</div></div></div>`;
+  if(x.k==="ab")return `<div class="it" data-a="editabs" data-id="${o.id}"><span class="dot" style="background:var(--abs)"></span><div class="g"><div class="t">${esc(empName(o.emp))} · ${esc(o.type)}</div><div class="muted">${r}</div></div></div>`;
+  return `<div class="it" data-a="editblock" data-id="${o.id}"><span class="dot" style="background:var(--bad)"></span><div class="g"><div class="t">${esc(o.label)}</div><div class="muted">${r} · ${o.loc?esc(locOf(o.loc).name):"alle Standorte"}${o.emp?" · "+esc(empName(o.emp)):""}</div></div></div>`}).join("")||`<div class="empty">Noch keine Einträge.</div>`}
+const ABS_TYPES=["Ferien","Krank","Militär / Zivilschutz","Frei","Weiterbildung","Sonstiges"];
+function assignForm(a){a=a||{};const wd=a.wd||[1,2,3,4,5];
+ return `<form data-f="assign" data-id="${a.id||""}">
+ ${fld("Mitarbeiter/in",`<select name="emp">${opts(empOpts(),a.emp)}</select>`)}
+ ${fld("Standort",`<select name="loc">${opts(S.locations,a.loc)}</select>`)}
+ <div class="row2">${fld("Von",`<input type="date" name="from" value="${a.from||today()}" required>`)}${fld("Bis",`<input type="date" name="to" value="${a.to||a.from||addDays(today(),30)}" required>`)}</div>
+ ${fld("Wochentage",`<div class="wd">${[1,2,3,4,5,6,0].map(d=>`<label><input type="checkbox" name="wd" value="${d}"${wd.includes(d)?" checked":""}><span>${WD[d]}</span></label>`).join("")}</div>`)}
+ ${fld("Stunden pro Tag",`<input type="number" name="h" min="0" max="24" step="0.25" value="${a.h??8}" inputmode="decimal">`)}
+ ${fld("Bemerkung",`<input name="note" value="${esc(a.note||"")}">`)}
+ <div id="warn"></div>
+ <div class="btns"><button class="btn" type="submit" id="sv">Speichern</button>${a.id?`<button type="button" class="btn bad" data-a="delassign" data-id="${a.id}">Löschen</button>`:""}</div></form>`}
+function absForm(a){a=a||{};
+ return `<form data-f="abs" data-id="${a.id||""}">
+ ${fld("Mitarbeiter/in",`<select name="emp">${opts(empOpts(),a.emp)}</select>`)}
+ ${fld("Art",`<select name="type">${ABS_TYPES.map(t=>`<option${t===a.type?" selected":""}>${t}</option>`).join("")}</select>`)}
+ <div class="row2">${fld("Von",`<input type="date" name="from" value="${a.from||today()}" required>`)}${fld("Bis",`<input type="date" name="to" value="${a.to||a.from||today()}" required>`)}</div>
+ ${fld("Bemerkung",`<input name="note" value="${esc(a.note||"")}">`)}
+ <div id="warn"></div>
+ <div class="btns"><button class="btn" type="submit" id="sv">Speichern</button>${a.id?`<button type="button" class="btn bad" data-a="delabs" data-id="${a.id}">Löschen</button>`:""}</div></form>`}
+function blockForm(b){b=b||{};
+ return `<form data-f="block" data-id="${b.id||""}">
+ ${fld("Bezeichnung",`<input name="label" value="${esc(b.label||"")}" placeholder="z. B. Werftaufenthalt, Betriebsferien" required>`)}
+ <div class="row2">${fld("Von",`<input type="date" name="from" value="${b.from||today()}" required>`)}${fld("Bis",`<input type="date" name="to" value="${b.to||b.from||today()}" required>`)}</div>
+ ${fld("Gilt für Standort",`<select name="loc">${opts(S.locations,b.loc,"Alle Standorte")}</select>`)}
+ ${fld("Gilt für Mitarbeiter/in",`<select name="emp">${opts(empOpts(),b.emp,"Alle")}</select>`)}
+ <div id="warn"></div>
+ <div class="btns"><button class="btn" type="submit" id="sv">Speichern</button>${b.id?`<button type="button" class="btn bad" data-a="delblock" data-id="${b.id}">Löschen</button>`:""}</div></form>`}
+function daySheet(e,d){
+ const c=ctx(e);const st=stateOf(c.A,c.AB,c.B,d);
+ const rows=[...st.as.map(a=>`<div class="it" data-a="editassign" data-id="${a.id}"><span class="dot" style="background:${locOf(a.loc).color}"></span><div class="g"><div class="t">Einsatz · ${esc(locOf(a.loc).name)}</div><div class="muted">${a.h} h${a.note?" · "+esc(a.note):""}</div></div></div>`),
+  ...(st.ab?[`<div class="it" data-a="editabs" data-id="${st.ab.id}"><span class="dot" style="background:var(--abs)"></span><div class="g"><div class="t">Absenz · ${esc(st.ab.type)}</div><div class="muted">${fmtD(st.ab.from)} – ${fmtD(st.ab.to)}</div></div></div>`]:[]),
+  ...st.bl.map(b=>`<div class="it" data-a="editblock" data-id="${b.id}"><span class="dot" style="background:var(--bad)"></span><div class="g"><div class="t">Sperrzeit · ${esc(b.label)}</div><div class="muted">${b.loc?esc(locOf(b.loc).name):"alle Standorte"}</div></div></div>`)].join("");
+ const KT={abs:"Einsatz trotz Absenz",blk:"Einsatz in Sperrzeit",dbl:"Doppelt eingeplant"};
+ sheet(`${esc(empName(e))} · ${fmtS(d)}`,`${st.c.map(k=>`<div class="warn">${KT[k]}</div>`).join("")}<div class="list">${rows||`<div class="muted" style="padding:8px 0">Nichts eingetragen.</div>`}</div><div class="btns"><button class="btn" data-a="newassign" data-e="${e}" data-d="${d}">Einsatz ab hier</button><button class="btn sec" data-a="newabs" data-e="${e}" data-d="${d}">Absenz</button></div>`);
+}
+function planWarn(f,kind,id){
+ const g=n=>f[n]?f[n].value:"";const emp=g("emp"),from=g("from"),to=g("to");const out=[];
+ if(!from||!to||to<from){return["Das Enddatum liegt vor dem Startdatum."]}
+ if(kind==="assign"){
+  const wd=[...f.querySelectorAll("[name=wd]:checked")].map(x=>+x.value);const loc=g("loc");
+  const A=S.assigns.filter(a=>a.emp===emp&&a.id!==id).concat([{id:"tmp",emp,loc,from,to,wd}]);
+  const c=ctx(emp);const n={abs:0,blk:0,dbl:0};
+  eachDay(from,to).forEach(d=>{if(!wd.includes(parse(d).getDay()))return;const st=stateOf(A,c.AB,c.B,d);if(!st.as.some(a=>a.id==="tmp"))return;
+   if(st.ab)n.abs++;if(st.as.some(a=>a.id==="tmp"&&st.bl.some(b=>!b.loc||b.loc===a.loc)))n.blk++;if(st.as.length>1)n.dbl++});
+  if(n.abs)out.push(`${n.abs} Einsatztag(e) fallen in eine Absenz.`);if(n.blk)out.push(`${n.blk} Einsatztag(e) fallen in eine Sperrzeit.`);if(n.dbl)out.push(`${n.dbl} Tag(e) sind doppelt eingeplant.`);
+ }else if(kind==="abs"){
+  const n=eachDay(from,to).filter(d=>S.assigns.some(a=>a.emp===emp&&a.from<=d&&d<=a.to&&a.wd.includes(parse(d).getDay()))).length;
+  if(n)out.push(`${n} eingeplante Einsatztag(e) liegen in dieser Absenz.`);
+ }else{
+  const loc=g("loc"),e2=g("emp");let n=0;
+  S.assigns.forEach(a=>{if((loc&&a.loc!==loc)||(e2&&a.emp!==e2))return;eachDay(from,to).forEach(d=>{if(a.from<=d&&d<=a.to&&a.wd.includes(parse(d).getDay()))n++})});
+  if(n)out.push(`${n} eingeplante Einsatztag(e) liegen in dieser Sperrzeit.`);
+ }
+ return out;
+}
+
+/* ---------- Rapport ---------- */
+function rf(){if(!S.ui.rf)S.ui.rf={from:monthStart(today()),to:monthEnd(today()),emp:"",loc:"",status:"open"};return S.ui.rf}
+function repSet(f){
+ let T=S.times.slice(),E=S.exps.slice();
+ if(f.status!=="open"&&f.status!=="all"){T=T.filter(x=>x.rep===f.status);E=E.filter(x=>x.rep===f.status)}
+ else{const ok=x=>x.date>=f.from&&x.date<=f.to&&(!f.emp||x.emp===f.emp)&&(!f.loc||x.loc===f.loc)&&(f.status==="all"||!x.rep);T=T.filter(ok);E=E.filter(ok)}
+ T.sort((a,b)=>(a.date+a.s).localeCompare(b.date+b.s));E.sort((a,b)=>a.date.localeCompare(b.date));
+ return{T,E};
+}
+function viewRep(){
+ if(!S.employees.length)return emptySetup();
+ const f=rf();
+ const sts=[{id:"open",name:"Nur offene (nicht abgerechnet)"},{id:"all",name:"Alle im Zeitraum"}].concat(S.reports.map(r=>({id:r.no,name:"Rapport "+r.no})));
+ return `<div class="card"><h2>Rapport zusammenstellen</h2>
+ <div class="row2">${fld("Von",`<input type="date" data-r="from" value="${f.from}">`)}${fld("Bis",`<input type="date" data-r="to" value="${f.to}">`)}</div>
+ <div class="btns"><button class="chip" data-a="rmonth" data-n="0">Dieser Monat</button><button class="chip" data-a="rmonth" data-n="-1">Letzter Monat</button></div>
+ <div class="row2">${fld("Mitarbeiter/in",`<select data-r="emp">${opts(S.employees,f.emp,"Alle")}</select>`)}${fld("Standort",`<select data-r="loc">${opts(S.locations,f.loc,"Alle")}</select>`)}</div>
+ ${fld("Umfang",`<select data-r="status">${opts(sts,f.status)}</select>`)}
+ <div class="btns"><button class="btn" data-a="print">Drucken / PDF</button><button class="btn sec" data-a="exphtml">Als HTML speichern</button><button class="btn sec" data-a="csvt">Zeiten CSV</button><button class="btn sec" data-a="csve">Spesen CSV</button></div>
+ <div class="btns"><button class="btn sec" data-a="closerep">Rapport abschliessen</button></div>
+ <div class="muted">Beim Abschliessen werden alle enthaltenen Zeiten und Spesen gesperrt und mit einer Rapportnummer versehen.</div></div>
+ <div id="rep"><div class="muted">Lade Rapport …</div></div>
+ ${S.reports.length?`<div class="card"><h2>Abgeschlossene Rapporte</h2><div class="list">${S.reports.slice().reverse().map(r=>`<div class="it" data-a="openrep" data-id="${r.id}"><div class="g"><div class="t">${esc(r.no)}</div><div class="muted">${fmtD(r.date)} · ${r.emp?esc(empName(r.emp)):"alle"} · ${chf(r.hours)} h · CHF ${chf(r.exp)}</div></div></div>`).join("")}</div></div>`:""}`;
+}
+const REPCSS=`.paper{background:#fff;color:#14202a;font:13px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;padding:18px;border-radius:10px;margin-bottom:12px}.paper h1{font-size:20px;margin:0 0 2px}.paper h2{font-size:15px;margin:20px 0 6px;border-bottom:2px solid #0E4A6B;padding-bottom:3px;color:#14202a}.paper h3{font-size:13px;margin:12px 0 4px}.paper table{width:100%;border-collapse:collapse;font-size:12px;margin:4px 0}.paper th,.paper td{padding:4px 5px;border-bottom:1px solid #d9e1e6;text-align:left;vertical-align:top}.paper th{background:#eef3f6;font-weight:600}.paper .r{text-align:right;white-space:nowrap}.paper .tot td{font-weight:700;border-top:2px solid #14202a}.paper .meta{color:#52636f;font-size:12px}.paper .warn{background:#fdf0ec;color:#8a2d1d;border:0;padding:6px 8px;border-radius:6px;margin:8px 0}.paper .sig{display:flex;gap:30px;margin-top:34px}.paper .sig div{flex:1;border-top:1px solid #14202a;padding-top:4px;font-size:11px;color:#52636f}.paper .bel{break-inside:avoid;margin:10px 0}.paper .bel img{max-width:100%;max-height:520px;border:1px solid #ccd6dc}.paper .pb{break-before:page}.paper .tw{overflow-x:auto}`;
+document.head.insertAdjacentHTML("beforeend","<style>"+REPCSS+"</style>");
+function repHTML(f,T,E,imgs){
+ let bn=0;const bno={};E.forEach(e=>{if(e.r)bno[e.id]="B"+(++bn)});
+ const missing=E.filter(e=>!e.r).length;
+ const ids=[...new Set(T.map(x=>x.emp).concat(E.map(x=>x.emp)))];
+ const emps=S.employees.filter(e=>ids.includes(e.id));
+ const isRep=f.status!=="open"&&f.status!=="all";
+ let h=`<h1>Arbeitsrapport &amp; Spesenabrechnung</h1><div class="meta">${esc(S.company)}<br>${isRep?"Rapport "+esc(f.status):"Zeitraum "+fmtD(f.from)+" – "+fmtD(f.to)}${!isRep&&f.loc?" · "+esc(locOf(f.loc).name):""} · erstellt am ${fmtD(today())}</div>`;
+ if(!T.length&&!E.length)return `<div class="paper">${h}<p>Keine Einträge für diese Auswahl.</p></div>`;
+ if(missing)h+=`<div class="warn">${missing} Spesenposition(en) ohne Beleg.</div>`;
+ let gH=0,gE=0,gP=0,gL=0;
+ emps.forEach(e=>{
+  const t=T.filter(x=>x.emp===e.id),x=E.filter(y=>y.emp===e.id);
+  const th=t.reduce((a,z)=>a+hrs(z),0);
+  const byL={},byA={};t.forEach(z=>{byL[z.loc]=(byL[z.loc]||0)+hrs(z);byA[z.act]=(byA[z.act]||0)+hrs(z)});
+  const priv=x.filter(z=>z.paid!=="firma").reduce((a,z)=>a+z.amt,0),firm=x.filter(z=>z.paid==="firma").reduce((a,z)=>a+z.amt,0);
+  const pay=th*(e.rate||0);gH+=th;gE+=priv;gP+=pay;gL+=firm;
+  h+=`<h2>${esc(e.name)}</h2>`;
+  if(t.length)h+=`<h3>Arbeitszeit</h3><div class="tw"><table><tr><th>Datum</th><th>Standort</th><th>Tätigkeit</th><th>Zeit</th><th class="r">Std.</th></tr>${t.map(z=>`<tr><td>${fmtS(z.date)}</td><td>${esc(locOf(z.loc).name)}</td><td>${esc(actName(z.act))}${z.note?`<br><span class="meta">${esc(z.note)}</span>`:""}</td><td>${esc(z.s)}–${esc(z.e)}${z.b?`<br><span class="meta">Pause ${z.b} Min.</span>`:""}</td><td class="r">${chf(hrs(z))}</td></tr>`).join("")}<tr class="tot"><td colspan="4">Total Stunden</td><td class="r">${chf(th)}</td></tr></table></div>
+  <div class="tw"><table><tr><th colspan="2">Nach Standort</th><th colspan="2">Nach Tätigkeit</th></tr><tr><td colspan="2" style="padding:0"><table>${Object.entries(byL).map(([k,v])=>`<tr><td>${esc(locOf(k).name)}</td><td class="r">${chf(v)}</td></tr>`).join("")}</table></td><td colspan="2" style="padding:0"><table>${Object.entries(byA).map(([k,v])=>`<tr><td>${esc(actName(k))}</td><td class="r">${chf(v)}</td></tr>`).join("")}</table></td></tr></table></div>`;
+  if(x.length)h+=`<h3>Spesen</h3><div class="tw"><table><tr><th>Datum</th><th>Art / Standort</th><th>Bezahlt</th><th>Beleg</th><th class="r">CHF</th></tr>${x.map(z=>`<tr><td>${fmtS(z.date)}</td><td>${esc(catName(z.cat))}<br><span class="meta">${esc(locOf(z.loc).name)}${z.note?" · "+esc(z.note):""}</span></td><td>${z.paid==="firma"?"Firma":"privat"}</td><td>${bno[z.id]||"fehlt"}</td><td class="r">${chf(z.amt)}</td></tr>`).join("")}</table></div>`;
+  h+=`<h3>Abrechnung</h3><table>${e.rate?`<tr><td>Arbeitszeit ${chf(th)} h × CHF ${chf(e.rate)}</td><td class="r">CHF ${chf(pay)}</td></tr>`:`<tr><td>Arbeitszeit</td><td class="r">${chf(th)} h</td></tr>`}<tr><td>Spesen, privat ausgelegt (zu erstatten)</td><td class="r">CHF ${chf(priv)}</td></tr>${firm?`<tr><td class="meta">Spesen über Firma (nur Nachweis)</td><td class="r meta">CHF ${chf(firm)}</td></tr>`:""}<tr class="tot"><td>Total Auszahlung</td><td class="r">CHF ${chf(pay+priv)}</td></tr></table>`;
+ });
+ if(emps.length>1)h+=`<h2>Gesamt</h2><table><tr><td>Stunden</td><td class="r">${chf(gH)} h</td></tr><tr><td>Arbeitszeit-Betrag</td><td class="r">CHF ${chf(gP)}</td></tr><tr><td>Spesen zu erstatten</td><td class="r">CHF ${chf(gE)}</td></tr><tr class="tot"><td>Total</td><td class="r">CHF ${chf(gP+gE)}</td></tr></table>`;
+ h+=`<div class="sig"><div>Mitarbeiter/in – Datum, Unterschrift</div><div>Visum Geschäftsleitung</div></div>`;
+ const withR=E.filter(e=>e.r&&imgs[e.id]);
+ if(withR.length)h+=`<div class="pb"></div><h2>Belege</h2>${withR.map(e=>`<div class="bel"><b>${bno[e.id]}</b> · ${fmtD(e.date)} · ${esc(empName(e.emp))} · ${esc(catName(e.cat))} · CHF ${chf(e.amt)}<br><img src="${imgs[e.id]}" alt="Beleg ${bno[e.id]}"></div>`).join("")}`;
+ return `<div class="paper">${h}</div>`;
+}
+async function repBuild(){const f=rf();const {T,E}=repSet(f);const imgs={};await Promise.all(E.filter(e=>e.r).map(async e=>{imgs[e.id]=await idb.get(e.id)}));return repHTML(f,T,E,imgs)}
+async function fillReport(){const h=await repBuild();const b=$("#rep");if(b)b.innerHTML=h}
+const csvq=v=>'"'+String(v??"").replace(/"/g,'""')+'"';
+const csvn=n=>String(n).replace(".",",");
+
+/* ---------- Stammdaten ---------- */
+function viewData(){
+ const sec=(t,items,add)=>`<div class="card"><h2>${t}</h2><div class="list">${items||`<div class="muted">Noch nichts erfasst.</div>`}</div><div class="btns"><button class="btn sec sm" data-a="${add}">Hinzufügen</button></div></div>`;
+ return `<div class="card"><h2>Betrieb</h2>${fld("Firmenname",`<input data-c="company" value="${esc(S.company)}">`)}<p class="muted">Alle Daten liegen ausschliesslich in diesem Browser auf diesem Gerät. Es gibt keinen Server und keine Weitergabe. Für Sicherung oder Gerätewechsel unten das Backup nutzen.</p></div>`
+ +sec("Mitarbeitende",S.employees.map(e=>`<div class="it" data-a="editemp" data-id="${e.id}"><div class="g"><div class="t">${esc(e.name)}${e.active===false?`<span class="tag">inaktiv</span>`:""}</div><div class="muted">${e.rate?"CHF "+chf(e.rate)+" / h":"kein Stundenansatz"}</div></div></div>`).join(""),"newemp")
+ +sec("Standorte",S.locations.map(l=>`<div class="it" data-a="editloc" data-id="${l.id}"><span class="dot" style="background:${l.color}"></span><div class="g"><div class="t">${esc(l.name)}</div></div></div>`).join(""),"newloc")
+ +sec("Tätigkeiten",S.activities.map(l=>`<div class="it" data-a="editact" data-id="${l.id}"><div class="g"><div class="t">${esc(l.name)}</div></div></div>`).join(""),"newact")
+ +sec("Spesenarten",S.cats.map(l=>`<div class="it" data-a="editcat" data-id="${l.id}"><div class="g"><div class="t">${esc(l.name)}</div></div></div>`).join(""),"newcat")
+ +`<div class="card"><h2>Backup</h2><div class="btns"><button class="btn sec" data-a="expjson">Backup exportieren</button><button class="btn sec" data-a="impjson">Backup einlesen</button><button class="btn sec" data-a="demo">Beispieldaten laden</button><button class="btn bad" data-a="wipe">Alles löschen</button></div><input type="file" id="impf" accept=".json,application/json" hidden></div>`;
+}
+function simpleForm(kind,o){o=o||{};return `<form data-f="${kind}" data-id="${o.id||""}">${fld("Bezeichnung",`<input name="name" value="${esc(o.name||"")}" required>`)}${kind==="loc"?fld("Farbe im Plan",`<input type="color" name="color" value="${o.color||PAL[S.locations.length%PAL.length]}" style="padding:2px;height:44px">`):""}<div class="btns"><button class="btn" type="submit">Speichern</button>${o.id?`<button type="button" class="btn bad" data-a="del${kind}" data-id="${o.id}">Löschen</button>`:""}</div></form>`}
+function empForm(e){e=e||{};return `<form data-f="emp" data-id="${e.id||""}">${fld("Name",`<input name="name" value="${esc(e.name||"")}" required>`)}${fld("Kürzel (für den Plan)",`<input name="short" maxlength="8" value="${esc(e.short||"")}">`)}${fld("Stundenansatz CHF (optional)",`<input type="number" name="rate" step="0.05" min="0" inputmode="decimal" value="${e.rate||""}">`)}<div class="fld"><label><input type="checkbox" name="inactive"${e.active===false?" checked":""}> inaktiv (erscheint nicht mehr in Auswahl und Plan)</label></div><div class="btns"><button class="btn" type="submit">Speichern</button>${e.id?`<button type="button" class="btn bad" data-a="delemp" data-id="${e.id}">Löschen</button>`:""}</div></form>`}
+function inUse(kind,id){const k={loc:["times","exps","assigns","blocks"],act:["times"],cat:["exps"]}[kind];return k.some(n=>S[n].some(x=>(kind==="loc"?x.loc:kind==="act"?x.act:x.cat)===id))}
+function demo(){
+ const t=today(),m0=monthStart(t);const E=[["Anna Muster","AM",42],["Ben Beispiel","BB",38],["Chiara Test","CT",40],["Dario Demo","DD",45]].map(x=>({id:uid(),name:x[0],short:x[1],rate:x[2]}));
+ S.employees=S.employees.concat(E);S.me=S.me||E[0].id;
+ const ms=addDays(m0,-31);
+ S.assigns.push({id:uid(),emp:E[0].id,loc:"l1",from:ms,to:addDays(m0,150),wd:[1,2,3,4,5],h:8,note:""},
+  {id:uid(),emp:E[1].id,loc:"l1",from:ms,to:addDays(m0,150),wd:[3,4,5,6,0],h:8,note:"Wochenend-Charter"},
+  {id:uid(),emp:E[2].id,loc:"l2",from:ms,to:addDays(m0,90),wd:[1,2,3,4,5],h:6,note:""},
+  {id:uid(),emp:E[3].id,loc:"l3",from:ms,to:addDays(m0,150),wd:[1,2,4],h:8,note:"Büro"},
+  {id:uid(),emp:E[2].id,loc:"l1",from:addDays(m0,20),to:addDays(m0,40),wd:[1,2,3,4,5],h:8,note:"Aushilfe Schiff"});
+ S.absences.push({id:uid(),emp:E[0].id,type:"Ferien",from:addDays(m0,27),to:addDays(m0,41),note:""},{id:uid(),emp:E[1].id,type:"Weiterbildung",from:addDays(m0,60),to:addDays(m0,62),note:""});
+ S.blocks.push({id:uid(),label:"Werftaufenthalt MS Oberhofen",from:addDays(m0,45),to:addDays(m0,75),loc:"l1",emp:""},{id:uid(),label:"Betriebsferien",from:addDays(m0,120),to:addDays(m0,134),loc:"",emp:""});
+ for(let i=1;i<=8;i++){const d=addDays(t,-i);if([0,6].includes(parse(d).getDay()))continue;S.times.push({id:uid(),emp:E[0].id,date:d,s:"08:00",e:"16:30",b:30,loc:"l1",act:i%2?"a1":"a4",note:""})}
+ S.exps.push({id:uid(),emp:E[0].id,date:addDays(t,-3),cat:"c2",loc:"l1",paid:"privat",amt:84.6,note:"Diesel Begleitboot",r:false});
+ save();render();toast("Beispieldaten geladen")}
+
+/* ---------- Aktionen ---------- */
+const A={
+ tab(e){S.ui.tab=e.dataset.t;if(S.ui.tab==="plan")scrollToday=true;save();render();window.scrollTo(0,0)},
+ close:closeSheet,
+ askok(){const f=askCb;closeSheet();f&&f()},
+ sub(e){S.ui.sub=e.dataset.s;save();render()},
+ toggleall(){S.ui.all=!S.ui.all;save();render()},
+ timerstart(){S.last={loc:$("#tl").value,act:$("#ta").value};S.timer={emp:S.me,start:new Date().toISOString(),loc:$("#tl").value,act:$("#ta").value};save();render()},
+ timerdrop(){S.timer=null;save();render()},
+ timerstop(){const t=S.timer;const st=new Date(t.start);const sd=iso(st);sheet("Zeit speichern",timeForm({emp:t.emp,date:sd,s:pad(st.getHours())+":"+pad(st.getMinutes()),e:nowT(),b:0,loc:t.loc,act:t.act}));calcHint($("#sheet form"));$("#sheet form").dataset.timer="1"},
+ newtime(){sheet("Zeit nachtragen",timeForm());calcHint($("#sheet form"))},
+ edittime(e){sheet("Zeit bearbeiten",timeForm(byId(S.times,e.dataset.id)));calcHint($("#sheet form"))},
+ deltime(e){const id=e.dataset.id;ask("Diese Zeit löschen?","Löschen",()=>{S.times=S.times.filter(x=>x.id!==id);save();render()})},
+ newexp(){sheet("Spesen erfassen",expForm())},
+ editexp(e){sheet("Spesen bearbeiten",expForm(byId(S.exps,e.dataset.id)))},
+ delexp(e){const id=e.dataset.id;ask("Diese Spesenposition samt Beleg löschen?","Löschen",()=>{S.exps=S.exps.filter(x=>x.id!==id);idb.del(id);save();render()})},
+ async showrcpt(e){const d=await idb.get(e.dataset.id);sheet("Beleg",d?`<img class="prev" style="max-height:none" src="${d}" alt="Beleg">`:"<p>Beleg nicht gefunden.</p>")},
+ span(e){S.ui.span=+e.dataset.n;scrollToday=true;save();render()},
+ pnav(e){const [y,m]=S.ui.planStart.split("-").map(Number);const n=+e.dataset.n*S.ui.span;const d=new Date(y,m-1+n,1);S.ui.planStart=d.getFullYear()+"-"+pad(d.getMonth()+1);scrollToday=true;save();render()},
+ day(e){daySheet(e.dataset.e,e.dataset.d)},
+ blockday(e){const d=e.dataset.d;const b=S.blocks.filter(x=>x.from<=d&&d<=x.to);sheet("Sperrzeiten · "+fmtS(d),`<div class="list">${b.map(x=>`<div class="it" data-a="editblock" data-id="${x.id}"><span class="dot" style="background:var(--bad)"></span><div class="g"><div class="t">${esc(x.label)}</div><div class="muted">${x.loc?esc(locOf(x.loc).name):"alle Standorte"}</div></div></div>`).join("")||`<div class="muted">Keine Sperrzeit an diesem Tag.</div>`}</div><div class="btns"><button class="btn sec" data-a="newblock" data-d="${d}">Sperrzeit anlegen</button></div>`)},
+ newassign(e){sheet("Einsatz planen",assignForm(e&&e.dataset&&e.dataset.e?{emp:e.dataset.e,from:e.dataset.d,to:addDays(e.dataset.d,13)}:{}))},
+ editassign(e){sheet("Einsatz bearbeiten",assignForm(byId(S.assigns,e.dataset.id)))},
+ delassign(e){const id=e.dataset.id;ask("Diesen Einsatz löschen?","Löschen",()=>{S.assigns=S.assigns.filter(x=>x.id!==id);save();render()})},
+ newabs(e){sheet("Absenz erfassen",absForm(e&&e.dataset&&e.dataset.e?{emp:e.dataset.e,from:e.dataset.d,to:e.dataset.d}:{}))},
+ editabs(e){sheet("Absenz bearbeiten",absForm(byId(S.absences,e.dataset.id)))},
+ delabs(e){const id=e.dataset.id;ask("Diese Absenz löschen?","Löschen",()=>{S.absences=S.absences.filter(x=>x.id!==id);save();render()})},
+ newblock(e){sheet("Sperrzeit erfassen",blockForm(e&&e.dataset&&e.dataset.d?{from:e.dataset.d,to:e.dataset.d}:{}))},
+ editblock(e){sheet("Sperrzeit bearbeiten",blockForm(byId(S.blocks,e.dataset.id)))},
+ delblock(e){const id=e.dataset.id;ask("Diese Sperrzeit löschen?","Löschen",()=>{S.blocks=S.blocks.filter(x=>x.id!==id);save();render()})},
+ rmonth(e){const n=+e.dataset.n;const d=new Date();d.setMonth(d.getMonth()+n,1);const f=rf();f.from=iso(d);f.to=monthEnd(f.from);f.status="open";save();render()},
+ print(){try{window.print()}catch(e){toast("Drucken nicht verfügbar – «Als HTML speichern» nutzen")}},
+ async exphtml(){const h=await repBuild();dl(`Rapport_${today()}.html`,`<!doctype html><html lang="de-CH"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Rapport</title><style>body{margin:0;background:#eef2f4}${REPCSS}</style></head><body>${h}</body></html>`,"text/html")},
+ csvt(){const {T}=repSet(rf());const r=[["Mitarbeiter","Datum","Von","Bis","Pause_Min","Stunden","Standort","Tätigkeit","Bemerkung","Rapport"].map(csvq).join(";")].concat(T.map(x=>[empName(x.emp),x.date,x.s,x.e,x.b||0,csvn(hrs(x).toFixed(2)),locOf(x.loc).name,actName(x.act),x.note,x.rep||""].map(csvq).join(";")));dl(`Zeiten_${today()}.csv`,"\ufeff"+r.join("\r\n"),"text/csv")},
+ csve(){const {E}=repSet(rf());const r=[["Mitarbeiter","Datum","Art","Standort","Bezahlt","Betrag_CHF","Beschreibung","Beleg","Rapport"].map(csvq).join(";")].concat(E.map(x=>[empName(x.emp),x.date,catName(x.cat),locOf(x.loc).name,x.paid==="firma"?"Firma":"privat",csvn(x.amt.toFixed(2)),x.note,x.r?"ja":"fehlt",x.rep||""].map(csvq).join(";")));dl(`Spesen_${today()}.csv`,"\ufeff"+r.join("\r\n"),"text/csv")},
+ closerep(){const f=rf();if(f.status!=="open"&&f.status!=="all"){toast("Dieser Rapport ist bereits abgeschlossen");return}
+  const {T,E}=repSet(f);const T2=T.filter(x=>!x.rep),E2=E.filter(x=>!x.rep);if(!T2.length&&!E2.length){toast("Nichts abzuschliessen");return}
+  const miss=E2.filter(x=>!x.r).length;
+  ask(`${T2.length} Zeiten und ${E2.length} Spesen werden abgeschlossen und gesperrt.${miss?` <b>${miss} Spesen ohne Beleg.</b>`:""}`,"Abschliessen",()=>{
+   const y=new Date().getFullYear();const no=`R-${y}-${String(S.reports.filter(r=>r.no.startsWith("R-"+y)).length+1).padStart(3,"0")}`;
+   T2.forEach(x=>x.rep=no);E2.forEach(x=>x.rep=no);
+   S.reports.push({id:uid(),no,date:today(),emp:f.emp,loc:f.loc,from:f.from,to:f.to,hours:T2.reduce((a,x)=>a+hrs(x),0),exp:E2.reduce((a,x)=>a+x.amt,0)});
+   f.status=no;save();render();toast("Rapport "+no+" abgeschlossen")})},
+ openrep(e){const r=byId(S.reports,e.dataset.id);sheet("Rapport "+esc(r.no),`<p class="muted">${fmtD(r.date)} · ${chf(r.hours)} h · CHF ${chf(r.exp)}</p><div class="btns"><button class="btn" data-a="showrep" data-id="${r.id}">Anzeigen</button><button class="btn bad" data-a="reopen" data-id="${r.id}">Abschluss aufheben</button></div>`)},
+ showrep(e){const r=byId(S.reports,e.dataset.id);rf().status=r.no;closeSheet();save();render();window.scrollTo(0,0)},
+ reopen(e){const r=byId(S.reports,e.dataset.id);closeSheet();ask(`Abschluss von ${esc(r.no)} aufheben? Zeiten und Spesen werden wieder bearbeitbar.`,"Aufheben",()=>{S.times.forEach(x=>{if(x.rep===r.no)delete x.rep});S.exps.forEach(x=>{if(x.rep===r.no)delete x.rep});S.reports=S.reports.filter(x=>x.id!==r.id);if(rf().status===r.no)rf().status="open";save();render()})},
+ newemp(){sheet("Mitarbeiter/in",empForm())},editemp(e){sheet("Mitarbeiter/in",empForm(byId(S.employees,e.dataset.id)))},
+ delemp(e){const id=e.dataset.id;const used=["times","exps","assigns","absences"].some(n=>S[n].some(x=>x.emp===id));if(used){toast("Hat Einträge – bitte auf inaktiv setzen");return}ask("Mitarbeiter/in löschen?","Löschen",()=>{S.employees=S.employees.filter(x=>x.id!==id);save();render()})},
+ newloc(){sheet("Standort",simpleForm("loc"))},editloc(e){sheet("Standort",simpleForm("loc",byId(S.locations,e.dataset.id)))},
+ newact(){sheet("Tätigkeit",simpleForm("act"))},editact(e){sheet("Tätigkeit",simpleForm("act",byId(S.activities,e.dataset.id)))},
+ newcat(){sheet("Spesenart",simpleForm("cat"))},editcat(e){sheet("Spesenart",simpleForm("cat",byId(S.cats,e.dataset.id)))},
+ delloc(e){delSimple("loc","locations",e.dataset.id)},delact(e){delSimple("act","activities",e.dataset.id)},delcat(e){delSimple("cat","cats",e.dataset.id)},
+ demo(){closeSheet();ask("Beispieldaten mit erfundenen Namen zu deinen Daten hinzufügen?","Laden",demo)},
+ wipe(){ask("Wirklich ALLE Daten auf diesem Gerät löschen? Das kann nicht rückgängig gemacht werden.","Alles löschen",async()=>{for(const x of S.exps)await idb.del(x.id);S=DEF();save();render()})},
+ async expjson(){const r={};for(const x of S.exps)if(x.r){const d=await idb.get(x.id);if(d)r[x.id]=d}dl(`Einsatz-Rapport-Backup_${today()}.json`,JSON.stringify({app:"bocsag-einsatz",S,receipts:r}),"application/json")},
+ impjson(){$("#impf").click()}
+};
+function delSimple(kind,key,id){if(inUse(kind,id)){toast("In Verwendung – kann nicht gelöscht werden");return}ask("Eintrag löschen?","Löschen",()=>{S[key]=S[key].filter(x=>x.id!==id);save();render()})}
+
+document.addEventListener("click",e=>{const b=e.target.closest("[data-a]");if(!b||!A[b.dataset.a])return;if(e.target.closest("form")&&b.type==="submit")return;A[b.dataset.a](b)});
+document.addEventListener("input",e=>{const f=e.target.closest("form");if(f&&f.dataset.f==="time")calcHint(f);const c=e.target.dataset;if(c.c==="company"){S.company=e.target.value;save();$("#co").textContent=S.company}});
+document.addEventListener("change",async e=>{
+ const t=e.target;
+ if(t.dataset.c==="me"){S.me=t.value;save();render();return}
+ if(t.dataset.r){const f=rf();f[t.dataset.r]=t.value;if(t.dataset.r!=="status"&&(f.status!=="open"&&f.status!=="all"))f.status="open";save();render();return}
+ if(t.name==="rcpt"&&t.files[0]){try{pendingR=await resizeImage(t.files[0]);$("#rprev").innerHTML=`<img class="prev" src="${pendingR}" alt="Vorschau">`}catch(x){toast("Bild konnte nicht gelesen werden")}return}
+ if(t.id==="impf"&&t.files[0]){const rd=new FileReader();rd.onload=()=>{try{const j=JSON.parse(rd.result);if(!j.S||j.app!=="bocsag-einsatz")throw 0;ask("Backup einlesen? Die aktuellen Daten auf diesem Gerät werden ersetzt.","Einlesen",async()=>{S=Object.assign(DEF(),j.S);S.ui=Object.assign(DEF().ui,S.ui||{});for(const [k,v] of Object.entries(j.receipts||{}))await idb.put(k,v);save();render();toast("Backup eingelesen")})}catch(x){toast("Datei ist kein gültiges Backup")}};rd.readAsText(t.files[0]);t.value=""}
+});
+document.addEventListener("submit",async e=>{
+ e.preventDefault();const f=e.target;const k=f.dataset.f,id=f.dataset.id;const v=n=>f[n]?f[n].value:"";
+ if(k==="time"){
+  if(v("s")===v("e")){$("#calc").textContent="Von und Bis sind gleich.";return}
+  const o={emp:v("emp"),date:v("date"),s:v("s"),e:v("e"),b:+v("b")||0,loc:v("loc"),act:v("act"),note:v("note").trim()};
+  if(id)Object.assign(byId(S.times,id),o);else S.times.push(Object.assign({id:uid()},o));
+  S.last={loc:o.loc,act:o.act};if(f.dataset.timer){S.timer=null}
+ }else if(k==="exp"){
+  const o={emp:v("emp"),date:v("date"),amt:Math.round((+v("amt")||0)*100)/100,cat:v("cat"),loc:v("loc"),paid:v("paid"),note:v("note").trim()};
+  let x=id?byId(S.exps,id):null;if(x)Object.assign(x,o);else{x=Object.assign({id:uid(),r:false},o);S.exps.push(x)}
+  if(pendingR){await idb.put(x.id,pendingR);x.r=true}
+ }else if(k==="assign"||k==="abs"||k==="block"){
+  const w=planWarn(f,k,id);const btn=$("#sv");
+  if(w.length&&!f.dataset.ok){$("#warn").innerHTML=w.map(m=>`<div class="warn">${m}</div>`).join("");f.dataset.ok="1";btn.textContent="Trotzdem speichern";return}
+  if(w.length&&w[0].startsWith("Das Enddatum"))return;
+  if(k==="assign"){const o={emp:v("emp"),loc:v("loc"),from:v("from"),to:v("to"),wd:[...f.querySelectorAll("[name=wd]:checked")].map(x=>+x.value),h:+v("h")||0,note:v("note").trim()};if(!o.wd.length){$("#warn").innerHTML=`<div class="warn">Mindestens einen Wochentag wählen.</div>`;return}if(id)Object.assign(byId(S.assigns,id),o);else S.assigns.push(Object.assign({id:uid()},o))}
+  if(k==="abs"){const o={emp:v("emp"),type:v("type"),from:v("from"),to:v("to"),note:v("note").trim()};if(id)Object.assign(byId(S.absences,id),o);else S.absences.push(Object.assign({id:uid()},o))}
+  if(k==="block"){const o={label:v("label").trim(),from:v("from"),to:v("to"),loc:v("loc"),emp:v("emp")};if(id)Object.assign(byId(S.blocks,id),o);else S.blocks.push(Object.assign({id:uid()},o))}
+ }else if(k==="emp"){
+  const o={name:v("name").trim(),short:v("short").trim()||v("name").trim().split(/\s+/).map(p=>p[0]).join("").toUpperCase(),rate:+v("rate")||0,active:!f.inactive.checked};
+  if(id)Object.assign(byId(S.employees,id),o);else{const n=Object.assign({id:uid()},o);S.employees.push(n);if(!S.me)S.me=n.id}
+ }else if(k==="loc"||k==="act"||k==="cat"){
+  const key={loc:"locations",act:"activities",cat:"cats"}[k];const o={name:v("name").trim()};if(k==="loc")o.color=v("color");
+  if(id)Object.assign(byId(S[key],id),o);else S[key].push(Object.assign({id:uid()},o));
+ }
+ save();closeSheet();render();toast("Gespeichert");
+});
+if(!S.ui.tab)S.ui.tab="time";
+render();
+</script>
+</body>
+</html>
