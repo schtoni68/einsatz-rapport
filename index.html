@@ -218,18 +218,37 @@ function viewLogin(){
  return `<div class="card"><h2>Anmelden</h2><form data-f="login">${fld("Person",`<select name="who">${opts(L,"")}</select>`)}${fld("Code",`<input type="password" name="pin" inputmode="numeric" autocomplete="current-password" required>`)}<div id="warn"></div><button class="btn full" type="submit">Anmelden</button></form></div>`}
 function viewAccount(){const u=cu();return `<div class="card"><h2>Mein Konto</h2><p>${esc(u.name)}${u.admin?`<span class="tag ok">Admin</span>`:""}</p><form data-f="mypin">${fld("Neuer Code (mind. 4 Zeichen)",`<input type="password" name="pin" inputmode="numeric" autocomplete="new-password" minlength="4" required>`)}${fld("Code wiederholen",`<input type="password" name="pin2" inputmode="numeric" autocomplete="new-password" minlength="4" required>`)}<div class="btns"><button class="btn" type="submit">Code ändern</button><button type="button" class="btn sec" data-a="logout">Abmelden</button></div></form><p class="muted">Der Code schützt die App auf diesem Gerät. Die Daten selbst liegen lokal im Browser.</p></div>`}
 
+/* ---------- Gemeinsame Pendenzen (Supabase) ---------- */
+const SB={url:"https://yoyavkaijmokznuwulmu.supabase.co",key:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlveWF2a2Fpam1va3pudXd1bG11Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM2NTY2MDMsImV4cCI6MjEwOTIzMjYwM30.pgP1BMjTXO5x8FOrV5xQls4R0pmMz3XvJ0-vXKdZxXY"};
+async function rpc(fn,args){
+ let r;try{r=await fetch(SB.url+"/rest/v1/rpc/"+fn,{method:"POST",headers:{"apikey":SB.key,"Authorization":"Bearer "+SB.key,"Content-Type":"application/json"},body:JSON.stringify(args)})}catch(x){const er=new Error("offline");er.offline=true;throw er}
+ const t=await r.text();let j=null;try{j=t?JSON.parse(t):null}catch(x){}
+ if(!r.ok){const er=new Error((j&&j.message)||"Fehler "+r.status);er.code=j&&j.code;throw er}
+ return j}
+const pmap=r=>({id:r.id,nr:r.nr,date:r.erfasst,text:r.text,who:r.wer,prio:r.prio,done:r.erledigt||""});
+const pendSync={at:"",err:"",busy:false};
+async function syncPend(){
+ if(!S.pcode||pendSync.busy)return;pendSync.busy=true;
+ try{const L=await rpc("pend_list",{p_code:S.pcode});S.pend=L.map(pmap);pendSync.at=nowT();pendSync.err="";save()}
+ catch(e){if(e.code==="28000"){S.pcode="";save();pendSync.err="code"}else pendSync.err="offline"}
+ pendSync.busy=false;if(CU&&S.ui.tab==="pend"&&$("#sheet").hidden)render()}
+const pendErr=e=>e.code==="28000"?"Zugangscode falsch":e.offline?"Keine Verbindung – nicht gespeichert":"Fehler: "+e.message;
+const pendSave=o=>rpc("pend_save",{p_code:S.pcode,p_id:o.id||null,p_text:o.text,p_wer:o.who||"",p_prio:o.prio||"",p_erfasst:o.date||today(),p_erledigt:o.done||null});
+setInterval(()=>{if(CU&&S.ui.tab==="pend"&&$("#sheet").hidden)syncPend()},60000);
+
 /* ---------- Pendenzen ---------- */
 function viewPend(){
+ if(!S.pcode)return `<div class="card"><h2>Gemeinsame Liste</h2><p class="muted">Die Pendenzenliste ist für alle gleich. Gib den gemeinsamen Zugangscode ein (einmal pro Gerät).</p>${pendSync.err==="code"?`<div class="warn">Der Code wurde geändert oder ist falsch.</div>`:""}<form data-f="pcodein">${fld("Zugangscode",`<input type="password" name="pcode" autocomplete="off" autocapitalize="none" required>`)}<div id="warn"></div><button class="btn full" type="submit">Verbinden</button></form></div>`;
  const f=S.ui.pf||"open";const open=S.pend.filter(x=>!x.done).length;const PR={hoch:0,mittel:1,tief:2};const PT={hoch:"Hoch",mittel:"Mittel",tief:"Tief"};
  const L=S.pend.filter(x=>f==="all"||(f==="open"?!x.done:!!x.done));
  L.sort((a,b)=>(f==="done"?0:(PR[a.prio]??3)-(PR[b.prio]??3))||a.nr-b.nr);
  const rows=L.map(x=>`<div class="it ${x.done?"dn":""}" data-a="editpend" data-id="${x.id}"><button class="chk ${x.done?"on":""}" data-a="pdone" data-id="${x.id}" aria-label="${x.done?"Wieder öffnen":"Als erledigt markieren"}">${x.done?"✓":""}</button><div class="g"><div class="t">${esc(x.text)}</div><div class="muted">Nr. ${x.nr} · erfasst ${fmtD(x.date)}${x.who?" · "+esc(x.who):""}${x.done?" · erledigt "+fmtD(x.done):""}${x.prio?`<span class="tag ${x.prio==="hoch"?"bad":""}">${PT[x.prio]}</span>`:""}</div></div></div>`).join("")||`<div class="empty">${f==="open"?"Keine offenen Pendenzen.":"Keine Einträge."}</div>`;
  return `<div class="card"><div class="sum"><div class="muted">Offen<b>${open}</b></div><div class="muted">Erledigt<b>${S.pend.length-open}</b></div></div>
  <div class="seg">${[["open","Offen"],["done","Erledigt"],["all","Alle"]].map(x=>`<button class="${f===x[0]?"on":""}" data-a="pf" data-s="${x[0]}">${x[1]}</button>`).join("")}</div>
- <div class="btns"><button class="btn" data-a="newpend">Pendenz erfassen</button></div><div class="list">${rows}</div></div>`}
+ <div class="btns"><button class="btn" data-a="newpend">Pendenz erfassen</button><button class="btn sec" data-a="prefresh">Aktualisieren</button></div><div class="muted" style="margin-bottom:6px">${pendSync.err==="offline"?"Offline – letzter bekannter Stand":pendSync.at?"Stand "+pendSync.at+" Uhr":"Wird geladen …"}</div><div class="list">${rows}</div></div>`}
 function pendForm(x){x=x||{};return `<form data-f="pend" data-id="${x.id||""}">
  ${fld("Beschreibung",`<textarea name="text" rows="3" required>${esc(x.text||"")}</textarea>`)}
- ${fld("Ausführung durch",`<input name="who" list="whol" value="${esc(x.who||"")}" placeholder="Name oder Firma"><datalist id="whol">${S.employees.filter(e=>e.active!==false).map(e=>`<option value="${esc(e.name)}">`).join("")}</datalist>`)}
+ ${fld("Ausführung durch",`<input name="who" value="${esc(x.who||"")}" placeholder="Firma oder Funktion, z. B. Werft"><div class="muted">Bitte keine Privatpersonen eintragen. Die Liste liegt auf einem gemeinsamen Server.</div>`)}
  <div class="row2">${fld("Priorität",`<select name="prio">${[["","–"],["hoch","Hoch"],["mittel","Mittel"],["tief","Tief"]].map(p=>`<option value="${p[0]}"${p[0]===(x.prio||"")?" selected":""}>${p[1]}</option>`).join("")}</select>`)}${fld("Erfasst am",`<input type="date" name="date" value="${x.date||today()}" required>`)}</div>
  <div class="fld"><label><input type="checkbox" name="done"${x.done?" checked":""}> Erledigt${x.done?" am "+fmtD(x.done):""}</label></div>
  <div class="btns"><button class="btn" type="submit">Speichern</button>${x.id&&isAdmin()?`<button type="button" class="btn bad" data-a="delpend" data-id="${x.id}">Löschen</button>`:""}</div></form>`}
@@ -496,6 +515,7 @@ function viewData(){
  +sec("Standorte",S.locations.map(l=>`<div class="it" data-a="editloc" data-id="${l.id}"><span class="dot" style="background:${l.color}"></span><div class="g"><div class="t">${esc(l.name)}</div></div></div>`).join(""),"newloc")
  +sec("Tätigkeiten",S.activities.map(l=>`<div class="it" data-a="editact" data-id="${l.id}"><div class="g"><div class="t">${esc(l.name)}</div></div></div>`).join(""),"newact")
  +sec("Spesenarten",S.cats.map(l=>`<div class="it" data-a="editcat" data-id="${l.id}"><div class="g"><div class="t">${esc(l.name)}</div></div></div>`).join(""),"newcat")
+ +`<div class="card"><h2>Gemeinsamer Pendenzen-Code</h2><p class="muted">Alle Geräte müssen danach den neuen Code einmal eingeben.</p><form data-f="pcode">${fld("Neuer Code (mind. 6 Zeichen)",`<input type="password" name="pcode" autocomplete="off" autocapitalize="none" required>`)}<button class="btn sec" type="submit"${S.pcode?"":" disabled"}>Code ändern</button>${S.pcode?"":`<div class="muted">Zuerst im Tab «Pendenzen» verbinden.</div>`}</form></div>`
  +`<div class="card"><h2>Backup</h2><div class="btns"><button class="btn sec" data-a="expjson">Backup exportieren</button><button class="btn sec" data-a="impjson">Backup / Nacherfassung einlesen</button><button class="btn sec" data-a="demo">Beispieldaten laden</button><button class="btn bad" data-a="wipe">Alles löschen</button></div></div>`+viewAccount();
 }
 function simpleForm(kind,o){o=o||{};return `<form data-f="${kind}" data-id="${o.id||""}">${fld("Bezeichnung",`<input name="name" value="${esc(o.name||"")}" required>`)}${kind==="loc"?fld("Farbe im Plan",`<input type="color" name="color" value="${o.color||PAL[S.locations.length%PAL.length]}" style="padding:2px;height:44px">`):""}<div class="btns"><button class="btn" type="submit">Speichern</button>${o.id?`<button type="button" class="btn bad" data-a="del${kind}" data-id="${o.id}">Löschen</button>`:""}</div></form>`}
@@ -522,9 +542,10 @@ const A={
  pf(e){S.ui.pf=e.dataset.s;save();render()},
  newpend(){sheet("Pendenz erfassen",pendForm())},
  editpend(e){sheet("Pendenz bearbeiten",pendForm(byId(S.pend,e.dataset.id)))},
- pdone(e){const x=byId(S.pend,e.dataset.id);x.done=x.done?"":today();save();render()},
- delpend(e){const id=e.dataset.id;ask("Diese Pendenz löschen?","Löschen",()=>{S.pend=S.pend.filter(x=>x.id!==id);save();render()})},
- tab(e){S.ui.tab=e.dataset.t;if(S.ui.tab==="plan")scrollToday=true;save();render();window.scrollTo(0,0)},
+ async pdone(e){const x=byId(S.pend,e.dataset.id);try{await pendSave({id:x.id,text:x.text,who:x.who,prio:x.prio,date:x.date,done:x.done?"":today()})}catch(er){toast(pendErr(er));return}await syncPend()},
+ prefresh(){syncPend().then(()=>toast(pendSync.err==="offline"?"Keine Verbindung":"Aktualisiert"))},
+ delpend(e){const id=e.dataset.id;ask("Diese Pendenz löschen?","Löschen",async()=>{try{await rpc("pend_delete",{p_code:S.pcode,p_id:id})}catch(er){toast(pendErr(er));return}await syncPend()})},
+ tab(e){S.ui.tab=e.dataset.t;if(S.ui.tab==="pend")syncPend();if(S.ui.tab==="plan")scrollToday=true;save();render();window.scrollTo(0,0)},
  close:closeSheet,
  askok(){const f=askCb;closeSheet();f&&f()},
  sub(e){S.ui.sub=e.dataset.s;save();render()},
@@ -600,13 +621,18 @@ document.addEventListener("submit",async e=>{
  if(k==="login"){
   if(Date.now()<lockUntil){bad("Zu viele Versuche. Bitte 30 Sekunden warten.");return}
   const u=byId(S.employees,v("who"));
-  if(u&&await checkPin(u,v("pin"))){fails=0;setUser(u.id);render();return}
+  if(u&&await checkPin(u,v("pin"))){fails=0;setUser(u.id);render();if(S.ui.tab==="pend")syncPend();return}
   fails++;if(fails>=5){lockUntil=Date.now()+30000;fails=0}bad("Code falsch.");f.elements.pin.value="";return}
  if(k==="setup"){
   const pin=v("pin");if(pin.length<4||pin!==v("pin2")){bad("Die Codes stimmen nicht überein oder sind kürzer als 4 Zeichen.");return}
   let u;if(v("who"))u=byId(S.employees,v("who"));else{const nm=v("name").trim();if(!nm){bad("Bitte einen Namen eingeben.");return}u={id:uid(),name:nm,short:nm.split(/\s+/).map(q=>q[0]).join("").toUpperCase(),rate:0,active:true};S.employees.push(u)}
   u.admin=true;u.active=true;await setPin(u,pin);save();setUser(u.id);render();return}
- if(["assign","abs","block","emp","loc","act","cat"].includes(k)&&!isAdmin())return;
+ if(k==="pcodein"){
+  const c=v("pcode").trim();
+  try{const L=await rpc("pend_list",{p_code:c});S.pcode=c;S.pend=L.map(pmap);pendSync.at=nowT();pendSync.err="";save();render()}
+  catch(er){bad(pendErr(er))}
+  return}
+ if(["assign","abs","block","emp","loc","act","cat","pcode"].includes(k)&&!isAdmin())return;
  if(k==="time"){
   if(v("s")===v("e")){$("#calc").textContent="Von und Bis sind gleich.";return}
   const o={emp:isAdmin()?v("emp"):CU,date:v("date"),s:v("s"),e:v("e"),b:+v("b")||0,loc:v("loc"),act:v("act"),note:v("note").trim()};
@@ -637,8 +663,13 @@ document.addEventListener("submit",async e=>{
   await setPin(cu(),p);
  }else if(k==="pend"){
   const o={text:v("text").trim(),who:v("who").trim(),prio:v("prio"),date:v("date")};const dn=f.elements.done.checked;
-  const x=id?byId(S.pend,id):null;o.done=dn?((x&&x.done)||today()):"";
-  if(x)Object.assign(x,o);else S.pend.push(Object.assign({id:uid(),nr:Math.max(0,...S.pend.map(q=>q.nr))+1},o));
+  const x=id?byId(S.pend,id):null;o.done=dn?((x&&x.done)||today()):"";if(x)o.id=x.id;
+  try{await pendSave(o)}catch(er){toast(pendErr(er));return}
+  await syncPend();
+ }else if(k==="pcode"){
+  const n=v("pcode").trim();if(n.length<6){toast("Mindestens 6 Zeichen");return}
+  try{await rpc("pend_set_code",{p_old:S.pcode,p_new:n})}catch(er){toast(pendErr(er));return}
+  S.pcode=n;
  }else if(k==="loc"||k==="act"||k==="cat"){
   const key={loc:"locations",act:"activities",cat:"cats"}[k];const o={name:v("name").trim()};if(k==="loc")o.color=v("color");
   if(id)Object.assign(byId(S[key],id),o);else S[key].push(Object.assign({id:uid()},o));
@@ -647,6 +678,7 @@ document.addEventListener("submit",async e=>{
 });
 if(!S.ui.tab)S.ui.tab="time";
 render();
+if(CU&&S.ui.tab==="pend")syncPend();
 </script>
 </body>
 </html>
