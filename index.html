@@ -27,13 +27,30 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:va
 #who{border:1px solid var(--ln);flex:none;background:transparent;color:inherit;border-radius:999px;padding:6px 11px;font:600 12px "Figtree",sans-serif;cursor:pointer;max-width:52%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 #who[hidden]{display:none}
 body.out nav{display:none}
+.pick{display:flex;flex-wrap:wrap;gap:6px}
+.pick label{border:1px solid var(--ln);border-radius:999px;padding:7px 12px;font-size:13px;cursor:pointer;color:var(--mut);font-weight:600}
+.pick input{display:none}
+.pick label:has(input:checked){background:var(--pri);border-color:var(--pri);color:var(--pri-ink)}
+.dot.t-g{background:var(--ok)}.dot.t-y{background:var(--acc)}.dot.t-r{background:var(--bad)}
+.mx-wrap{overflow-x:auto;border:1px solid var(--ln);border-radius:10px;background:var(--sf)}
+.mx{border-collapse:collapse;font-size:13px;min-width:100%}
+.mx th,.mx td{text-align:center;height:36px;min-width:32px;padding:0 2px;border-bottom:1px solid var(--ln);border-right:1px solid color-mix(in srgb,var(--ln) 55%,transparent)}
+.mx th.rt{height:124px;vertical-align:bottom;padding:4px 2px}
+.mx th.rt span{writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;font-size:11px;font-weight:600}
+.mx .nm{position:sticky;left:0;z-index:2;background:var(--sf);text-align:left;min-width:104px;max-width:104px;padding:0 6px;font-weight:600;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mx tr[data-a]{cursor:pointer}
+.mx td.t-g{background:color-mix(in srgb,var(--ok) 28%,transparent)}
+.mx td.t-y{background:color-mix(in srgb,var(--acc) 34%,transparent)}
+.mx td.t-r{background:color-mix(in srgb,var(--bad) 28%,transparent)}
+.mx td.na{color:var(--mut)}
+.mx td.st{font-weight:700}
 .chk{width:34px;height:34px;border-radius:50%;border:2px solid var(--ln);background:transparent;color:var(--pri-ink);flex:none;cursor:pointer;font-size:17px;line-height:1;padding:0}
 .chk.on{background:var(--ok);border-color:var(--ok)}
 .it.dn .t{text-decoration:line-through;color:var(--mut)}
 header h1{font-size:15px;line-height:1.2;color:var(--pri)}
 main{padding:12px;max-width:900px;margin:0 auto}
 nav{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;background:var(--sf);border-top:1px solid var(--ln);padding-bottom:env(safe-area-inset-bottom,0px)}
-nav button{flex:1;border:0;background:none;color:var(--mut);padding:9px 0 8px;font:600 12px "Figtree",sans-serif;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer}
+nav button{flex:1;border:0;background:none;color:var(--mut);padding:9px 0 8px;font:600 11px "Figtree",sans-serif;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer}
 nav button svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 nav button.on{color:var(--pri)}
 .card{background:var(--sf);border:1px solid var(--ln);border-radius:12px;padding:12px;margin-bottom:12px}
@@ -127,6 +144,7 @@ table.t td.r,table.t th.r{text-align:right}
  <button data-a="tab" data-t="time"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></svg>Erfassen</button>
  <button data-a="tab" data-t="plan"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M7 15h4"/></svg>Planung</button>
  <button data-a="tab" data-t="pend"><svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M3.5 6l1.2 1.2L6.8 5M3.5 12l1.2 1.2L6.8 11M3.5 18l1.2 1.2L6.8 17"/></svg>Pendenzen</button>
+ <button data-a="tab" data-t="train"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5"/><path d="M5.6 5.6l3.9 3.9M14.5 14.5l3.9 3.9M18.4 5.6l-3.9 3.9M9.5 14.5l-3.9 3.9"/></svg>Ausbildung</button>
  <button data-a="tab" data-t="rep"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h7"/></svg>Rapport</button>
  <button data-a="tab" data-t="data"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1.2l2-1.5-2-3.4-2.3 1a7 7 0 0 0-2-1.2L14.3 3h-4l-.4 2.7a7 7 0 0 0-2 1.2l-2.3-1-2 3.4 2 1.5A7 7 0 0 0 5 12c0 .4 0 .8.1 1.2l-2 1.5 2 3.4 2.3-1a7 7 0 0 0 2 1.2l.4 2.7h4l.4-2.7a7 7 0 0 0 2-1.2l2.3 1 2-3.4-2-1.5c.1-.4.1-.8.1-1.2z"/></svg>Daten</button>
 </nav>
@@ -161,8 +179,8 @@ const DEF=()=>({v:1,company:"Berner Oberland Charterschiff AG",me:"",
  locations:[{id:"l1",name:"MS Oberhofen (an Bord)",color:PAL[0]},{id:"l2",name:"Hofstetten-Ländte",color:PAL[1]},{id:"l3",name:"Büro Thun",color:PAL[2]}],
  activities:[{id:"a1",name:"Fahrt / Schiffsführung"},{id:"a2",name:"Service an Bord"},{id:"a3",name:"Catering"},{id:"a4",name:"Reinigung & Unterhalt"},{id:"a5",name:"Vorbereitung & Büro"},{id:"a6",name:"Werft / Winterunterhalt"}],
  cats:[{id:"c1",name:"Verpflegung"},{id:"c2",name:"Treibstoff"},{id:"c3",name:"Material"},{id:"c4",name:"Reise / Parkplatz"},{id:"c5",name:"Übernachtung"},{id:"c6",name:"Sonstiges"}],
- employees:[],absences:[],blocks:[],assigns:[],times:[],exps:[],reports:[],pend:[],timers:{},last:{},
- ui:{tab:"time",sub:"zeit",all:false,planStart:today().slice(0,7),span:1,rf:null,pf:"open"}});
+ employees:[],absences:[],blocks:[],assigns:[],times:[],exps:[],reports:[],pend:[],timers:{},last:{},drills:[],seasons:{},roles:[{id:"r1",name:"Hilfe in Seenot",short:"Seenot"},{id:"r2",name:"Mann über Bord",short:"MüB"},{id:"r3",name:"Kollision",short:"Koll."},{id:"r4",name:"Leck / Sinken",short:"Leck"},{id:"r5",name:"Brand",short:"Brand"},{id:"r6",name:"Ausfall der Steuerungseinrichtung",short:"Steuer."},{id:"r7",name:"Ungünstige Wetterverhältnisse",short:"Wetter"},{id:"r8",name:"Einsatz von Rettungsmitteln",short:"Rettung"},{id:"r9",name:"Ankern",short:"Ankern"},{id:"r10",name:"Erste Hilfe",short:"EH"}],
+ ui:{tab:"time",sub:"zeit",all:false,planStart:today().slice(0,7),span:1,rf:null,pf:"open",dy:null,dn:false}});
 function load(){try{const r=localStorage.getItem(KEY);return r?JSON.parse(r):null}catch(e){return null}}
 let S=Object.assign(DEF(),load()||{});
 S.ui=Object.assign(DEF().ui,S.ui||{});
@@ -208,7 +226,7 @@ const isAdmin=()=>{const u=cu();return !!(u&&u.admin&&u.active!==false)};
 function setUser(id){CU=id;try{id?sessionStorage.setItem("bocsag-user",id):sessionStorage.removeItem("bocsag-user")}catch(e){}if(id)S.me=id}
 let fails=0,lockUntil=0;
 const empFld=sel=>isAdmin()?fld("Mitarbeiter/in",`<select name="emp">${opts(empOpts(),sel)}</select>`):`<input type="hidden" name="emp" value="${esc(CU)}">`;
-const ADMIN=new Set(["newassign","editassign","delassign","newabs","editabs","delabs","newblock","editblock","delblock","closerep","openrep","showrep","reopen","newemp","editemp","delemp","newloc","editloc","delloc","newact","editact","delact","newcat","editcat","delcat","demo","wipe","expjson","impjson","delpend"]);
+const ADMIN=new Set(["newassign","editassign","delassign","newabs","editabs","delabs","newblock","editblock","delblock","closerep","openrep","showrep","reopen","newemp","editemp","delemp","newloc","editloc","delloc","newact","editact","delact","newcat","editcat","delcat","demo","wipe","expjson","impjson","delpend","newdrill","editdrill","deldrill","season","dnach","dnexp","newrole","editrole","delrole"]);
 function viewLogin(){
  if(!hasAuth()){
   const ex=S.employees.filter(e=>e.active!==false);
@@ -224,7 +242,7 @@ function viewLogin(){
 function viewAccount(){const u=cu();return `<div class="card"><h2>Mein Konto</h2><p>${esc(u.name)}${u.admin?`<span class="tag ok">Admin</span>`:""}</p><form data-f="mypin">${fld("Neuer Code (mind. 4 Zeichen)",`<input type="password" name="pin" inputmode="numeric" autocomplete="new-password" minlength="4" required>`)}${fld("Code wiederholen",`<input type="password" name="pin2" inputmode="numeric" autocomplete="new-password" minlength="4" required>`)}<div class="btns"><button class="btn" type="submit">Code ändern</button><button type="button" class="btn sec" data-a="logout">Abmelden</button></div></form><p class="muted">Der Code schützt die App auf diesem Gerät. Zeiten, Spesen und Planung liegen lokal im Browser.</p></div>`}
 
 /* ---------- Gemeinsame Pendenzen (Supabase) ---------- */
-const SB={url:"https://yoyavkaijmokznuwulmu.supabase.co",key:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlveWF2a2Fpam1va3pudXd1bG11Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM2NTY2MDMsImV4cCI6MjEwOTIzMjYwM30.pgP1BMjTXO5x8FOrV5xQls4R0pmMz3XvJ0-vXKdZxXY"};
+const SB={url:"https://guituutnunpepqzordoc.supabase.co",key:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd1aXR1dXRudW5wZXBxem9yZG9jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTUxODg5NTgsImV4cCI6MjExMDc2NDk1OH0.mU25ljg828mP1Ivu4lzuDhxuQIv24Iy3iLz_BUkCUOg"};
 async function rpc(fn,args){
  let r;try{r=await fetch(SB.url+"/rest/v1/rpc/"+fn,{method:"POST",headers:{"apikey":SB.key,"Authorization":"Bearer "+SB.key,"Content-Type":"application/json"},body:JSON.stringify(args)})}catch(x){const er=new Error("offline");er.offline=true;throw er}
  const t=await r.text();let j=null;try{j=t?JSON.parse(t):null}catch(x){}
@@ -233,16 +251,17 @@ async function rpc(fn,args){
 const pmap=r=>({id:r.id,nr:r.nr,date:r.erfasst,text:r.text,who:r.wer,prio:r.prio,done:r.erledigt||""});
 const pendSync={at:"",err:"",busy:false};
 async function syncPend(){
- if(pendSync.busy)return;pendSync.busy=true;
- try{const L=await rpc("pend_list",{p_code:""});S.pend=L.map(pmap);pendSync.at=nowT();pendSync.err="";save()}
- catch(e){pendSync.err="offline"}
+ if(!S.pcode||pendSync.busy)return;pendSync.busy=true;
+ try{const L=await rpc("pend_list",{p_code:S.pcode});S.pend=L.map(pmap);pendSync.at=nowT();pendSync.err="";save()}
+ catch(e){if(e.code==="28000"){S.pcode="";save();pendSync.err="code"}else pendSync.err="offline"}
  pendSync.busy=false;if(CU&&S.ui.tab==="pend"&&$("#sheet").hidden)render()}
-const pendErr=e=>e.offline?"Keine Verbindung – nicht gespeichert":"Fehler: "+e.message;
-const pendSave=o=>rpc("pend_save",{p_code:"",p_id:o.id||null,p_text:o.text,p_wer:o.who||"",p_prio:o.prio||"",p_erfasst:o.date||today(),p_erledigt:o.done||null});
+const pendErr=e=>e.code==="28000"?"Zugangscode falsch":e.offline?"Keine Verbindung – nicht gespeichert":"Fehler: "+e.message;
+const pendSave=o=>rpc("pend_save",{p_code:S.pcode,p_id:o.id||null,p_text:o.text,p_wer:o.who||"",p_prio:o.prio||"",p_erfasst:o.date||today(),p_erledigt:o.done||null});
 setInterval(()=>{if(CU&&S.ui.tab==="pend"&&$("#sheet").hidden)syncPend()},60000);
 
 /* ---------- Pendenzen ---------- */
 function viewPend(){
+ if(!S.pcode)return `<div class="card"><h2>Gemeinsame Liste</h2><p class="muted">Die Pendenzenliste ist für alle gleich. Gib den gemeinsamen Zugangscode ein (einmal pro Gerät).</p>${pendSync.err==="code"?`<div class="warn">Der Code wurde geändert oder ist falsch.</div>`:""}<form data-f="pcodein">${fld("Zugangscode",`<input type="password" name="pcode" autocomplete="off" autocapitalize="none" required>`)}<div id="warn"></div><button class="btn full" type="submit">Verbinden</button></form></div>`;
  const f=S.ui.pf||"open";const open=S.pend.filter(x=>!x.done).length;const PR={hoch:0,mittel:1,tief:2};const PT={hoch:"Hoch",mittel:"Mittel",tief:"Tief"};
  const L=S.pend.filter(x=>f==="all"||(f==="open"?!x.done:!!x.done));
  L.sort((a,b)=>(f==="done"?0:(PR[a.prio]??3)-(PR[b.prio]??3))||a.nr-b.nr);
@@ -265,6 +284,58 @@ function mergeIn(m){let n=0;const map={};
  (m.pend||[]).forEach(x=>{if(!S.pend.some(y=>y.id===x.id)){if(S.pend.some(y=>y.nr===x.nr))x.nr=Math.max(0,...S.pend.map(p=>p.nr))+1;S.pend.push(x);n++}});
  return n}
 
+/* ---------- Ausbildung (Rollenübungen) ---------- */
+const dYear=()=>S.ui.dy||new Date().getFullYear();
+const crewOf=()=>S.employees.filter(e=>e.active!==false&&e.crew!==false);
+const empRoles=e=>e.roles?S.roles.filter(r=>e.roles.includes(r.id)):S.roles;
+function seasonOf(y){const x=(S.seasons||{})[y];return x||{start:y+"-04-01",end:y+"-10-31"}}
+function checkpoints(y){const s=seasonOf(y),a=parse(s.start).getTime(),b=parse(s.end).getTime();return[s.start,iso(new Date(Math.round((a+b)/2))),s.end]}
+function dueNow(y){const lim=addDays(today(),14);return checkpoints(y).filter(d=>d<=lim).length}
+function drillCounts(id,y){const m={};S.drills.forEach(d=>{if(d.date.slice(0,4)!==String(y)||!d.parts.includes(id))return;d.roles.forEach(r=>{const c=m[r]||(m[r]={n:0,last:""});c.n++;if(d.date>c.last)c.last=d.date})});return m}
+const stat=(n,due)=>n>=3||n>=due?"g":(n===due-1?"y":"r");
+function trainStatus(e,y){const cm=drillCounts(e.id,y),due=dueNow(y),rs=empRoles(e);let worst="g";
+ rs.forEach(r=>{const x=stat((cm[r.id]||{n:0}).n,due);if(x==="r")worst="r";else if(x==="y"&&worst!=="r")worst="y"});
+ const st=seasonOf(y).start;const pre=S.drills.some(d=>d.date.slice(0,4)===String(y)&&d.parts.includes(e.id)&&d.date<st);
+ if(!pre&&today()>st&&rs.length)worst="r";
+ return{worst,cm,rs,pre,due}}
+const SYM={g:"✓",y:"!",r:"✕"};
+function trainBanner(){const y=new Date().getFullYear();const c=crewOf().map(e=>trainStatus(e,y).worst);const r=c.filter(x=>x==="r").length,g=c.filter(x=>x==="y").length;if(!r&&!g)return"";
+ return `<div class="warn" data-a="tab" data-t="train" style="cursor:pointer">Rollenübungen ${y}: ${r?r+" im Rückstand":""}${r&&g?", ":""}${g?g+" knapp":""} – zur Übersicht</div>`}
+function personHTML(e,y){const st=trainStatus(e,y),s=seasonOf(y);
+ return `<div class="muted" style="margin-bottom:6px">Saison ${fmtD(s.start)} – ${fmtD(s.end)} · mind. 3 Übungen pro Rolle</div><div class="list">${st.rs.map(r=>{const c=st.cm[r.id]||{n:0,last:""};return `<div class="it" style="cursor:default"><span class="dot t-${stat(c.n,st.due)}"></span><div class="g"><div class="t">${esc(r.name)}</div><div class="muted">${c.n} von 3${c.last?" · zuletzt "+fmtD(c.last):""}</div></div></div>`}).join("")||`<div class="muted">Keine Rollen zugewiesen.</div>`}</div><div class="muted" style="margin-top:8px">Vor Saisonbeginn geübt: ${st.pre?"ja":"nein"}</div>`}
+function viewTrain(){
+ const y=dYear(),s=seasonOf(y);
+ if(!isAdmin()){const u=cu();if(u.crew===false)return `<div class="card"><h2>Rollenübungen</h2><p class="muted">Für dich sind keine Rollenübungen vorgesehen.</p></div>`;
+  return `<div class="card"><h2>Meine Rollenübungen ${y}</h2>${personHTML(u,y)}</div>`}
+ const crew=crewOf();const sts=crew.map(e=>({e,st:trainStatus(e,y)}));
+ const n={g:0,y:0,r:0};sts.forEach(x=>n[x.st.worst]++);
+ const head=S.roles.map(r=>`<th class="rt"><span>${esc(r.name)}</span></th>`).join("");
+ const rows=sts.map(({e,st})=>`<tr data-a="person" data-id="${e.id}"><td class="nm">${esc(e.name)}</td>${S.roles.map(r=>{if(!st.rs.some(x=>x.id===r.id))return `<td class="na">–</td>`;const c=(st.cm[r.id]||{n:0}).n;return `<td class="t-${stat(c,st.due)}">${c}</td>`}).join("")}<td>${st.pre?"✓":"–"}</td><td class="st t-${st.worst}">${SYM[st.worst]}</td></tr>`).join("");
+ const dr=S.drills.filter(d=>d.date.slice(0,4)===String(y)).sort((a,b)=>b.date.localeCompare(a.date));
+ const list=dr.map(d=>`<div class="it" data-a="editdrill" data-id="${d.id}"><div class="g"><div class="t">${fmtD(d.date)}${d.loc?" · "+esc(locOf(d.loc).name):""}</div><div class="muted">${d.parts.length} Teilnehmende · ${d.roles.length} Rollen${d.lead?" · Leitung "+esc(empName(d.lead)):""}</div></div></div>`).join("")||`<div class="empty">Noch keine Übungen erfasst.</div>`;
+ return `<div class="card"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><button class="btn sec sm" data-a="dyear" data-n="-1" aria-label="Vorjahr">‹</button><b style="font-family:'Bricolage Grotesque',sans-serif;font-size:18px">${y}</b><button class="btn sec sm" data-a="dyear" data-n="1" aria-label="Folgejahr">›</button></div>
+ <div class="muted">Saison ${fmtD(s.start)} – ${fmtD(s.end)} · mind. 3 Übungen pro Person und Rolle, gleichmässig verteilt, eine vor Saisonbeginn</div>
+ <div class="sum" style="margin-top:10px"><div class="muted">Im Plan<b>${n.g}</b></div><div class="muted">Knapp<b>${n.y}</b></div><div class="muted">Rückstand<b>${n.r}</b></div></div>
+ ${crew.length?`<div class="mx-wrap"><table class="mx"><tr><th class="nm"></th>${head}<th class="rt"><span>Vor Saisonbeginn</span></th><th class="rt"><span>Stand</span></th></tr>${rows}</table></div><div class="muted" style="margin-top:6px">Zahl = Übungen in diesem Jahr (Ziel 3). ✓ im Plan · ! knapp · ✕ Rückstand. Zeile antippen für Details.</div>`:`<div class="empty">Keine Besatzung erfasst. Unter «Daten» Mitarbeitende anlegen.</div>`}
+ <div class="btns"><button class="btn" data-a="newdrill">Übung erfassen</button><button class="btn sec" data-a="season">Saison anpassen</button><button class="btn sec" data-a="dnach">${S.ui.dn?"Nachweis ausblenden":"Nachweis anzeigen"}</button></div></div>
+ ${S.ui.dn?`<div class="card"><div class="btns"><button class="btn" data-a="print">Drucken / PDF</button><button class="btn sec" data-a="dnexp">Als HTML speichern</button></div></div><div id="rep">${nachweisHTML(y)}</div>`:""}
+ <div class="card"><h2>Übungen ${y}</h2><div class="list">${list}</div></div>`}
+function nachweisHTML(y){const crew=crewOf(),s=seasonOf(y),rs=S.roles;
+ const rows=crew.map(e=>{const st=trainStatus(e,y);return `<tr><td>${esc(e.name)}</td>${rs.map(r=>st.rs.some(x=>x.id===r.id)?`<td class="r">${(st.cm[r.id]||{n:0}).n}</td>`:`<td class="r">–</td>`).join("")}<td class="r">${st.pre?"ja":"nein"}</td></tr>`}).join("");
+ const dr=S.drills.filter(d=>d.date.slice(0,4)===String(y)).sort((a,b)=>a.date.localeCompare(b.date));
+ return `<div class="paper"><h1>Nachweis Rollenübungen ${y}</h1><div class="meta">${esc(S.company)}<br>Schifffahrtssaison ${fmtD(s.start)} – ${fmtD(s.end)} · Grundlage: Ausführungsbestimmungen des UVEK zur Schiffbauverordnung (AB-SBV 747.201.71), Teil I, Art. 46 · mindestens 3 Übungen pro Jahr und Rolle · Stand ${fmtD(today())}</div>
+ <h2>Übungen pro Person und Rolle</h2><div class="tw"><table><tr><th>Person</th>${rs.map(r=>`<th class="r">${esc(r.short||r.name)}</th>`).join("")}<th class="r">Vor Saison</th></tr>${rows}</table></div><div class="meta">${rs.map(r=>esc(r.short||r.name)+" = "+esc(r.name)).join(" · ")}</div>
+ <h2>Durchgeführte Übungen</h2><div class="tw"><table><tr><th>Datum</th><th>Ort</th><th>Rollen</th><th>Teilnehmende</th></tr>${dr.map(d=>`<tr><td>${fmtD(d.date)}</td><td>${d.loc?esc(locOf(d.loc).name):""}</td><td>${d.roles.map(id=>esc((byId(S.roles,id)||{short:"?"}).short)).join(", ")}</td><td>${d.parts.map(id=>esc(empName(id))).join(", ")}${d.lead?`<br><span class="meta">Leitung: ${esc(empName(d.lead))}</span>`:""}${d.note?`<br><span class="meta">${esc(d.note)}</span>`:""}</td></tr>`).join("")||`<tr><td colspan="4">Keine Übungen erfasst.</td></tr>`}</table></div>
+ <div class="sig"><div>Datum, Unterschrift Verantwortliche/r</div><div></div></div></div>`}
+function drillForm(d){d=d||{};const roles=d.roles||[],parts=d.parts||[];const crew=S.employees.filter(e=>(e.active!==false&&e.crew!==false)||parts.includes(e.id));
+ const pick=(label,name,items,sel)=>`<div class="fld"><div style="display:flex;align-items:center;gap:6px;margin-bottom:5px;flex-wrap:wrap"><span style="font-size:13px;color:var(--mut);font-weight:500;flex:1">${label}</span><button type="button" class="btn sec sm" data-a="pick" data-n="${name}" data-v="1">alle</button><button type="button" class="btn sec sm" data-a="pick" data-n="${name}" data-v="0">keine</button></div><div class="pick">${items.map(x=>`<label><input type="checkbox" name="${name}" value="${x.id}"${sel.includes(x.id)?" checked":""}><span>${esc(x.name)}</span></label>`).join("")}</div></div>`;
+ return `<form data-f="drill" data-id="${d.id||""}">${fld("Datum",`<input type="date" name="date" value="${d.date||today()}" required>`)}
+ <div class="row2">${fld("Ort / Schiff",`<select name="loc">${opts(S.locations,d.loc,"–")}</select>`)}${fld("Leitung",`<select name="lead">${opts(empOpts(),d.lead,"–")}</select>`)}</div>
+ ${pick("Geübte Rollen","role",S.roles,roles)}${pick("Teilnehmende","part",crew,parts)}
+ ${fld("Bemerkung",`<input name="note" value="${esc(d.note||"")}">`)}<div id="warn"></div>
+ <div class="btns"><button class="btn" type="submit">Speichern</button>${d.id?`<button type="button" class="btn bad" data-a="deldrill" data-id="${d.id}">Löschen</button>`:""}</div></form>`}
+function seasonForm(y){const s=seasonOf(y);return `<form data-f="season" data-y="${y}">${fld("Saisonbeginn",`<input type="date" name="start" value="${s.start}" required>`)}${fld("Saisonende",`<input type="date" name="end" value="${s.end}" required>`)}<p class="muted">Aus der Saison ergeben sich die Fälligkeiten: 1. Übung bis Saisonbeginn, 2. bis Saisonmitte, 3. bis Saisonende. Zwei Wochen vorher wird die Anzeige «knapp».</p><div class="btns"><button class="btn" type="submit">Speichern</button></div></form>`}
+
 /* ---------- Render ---------- */
 function render(){
  if(CU&&(!cu()||!cu().pin||cu().active===false))setUser(null);
@@ -273,8 +344,8 @@ function render(){
  $("#who").textContent="Abmelden";$("#who").title=cu().name+" abmelden";
  const old=document.querySelector(".grid-wrap");const sl=old?old.scrollLeft:0;
  document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.t===S.ui.tab));
- $("#ttl").textContent={time:"Erfassen",plan:"Einsatzplanung",pend:"Pendenzen Schiff",rep:"Rapport & Abrechnung",data:isAdmin()?"Stammdaten":"Mein Konto"}[S.ui.tab];
- $("#app").innerHTML={time:viewTime,plan:viewPlan,pend:viewPend,rep:viewRep,data:viewData}[S.ui.tab]();
+ $("#ttl").textContent={time:"Erfassen",plan:"Einsatzplanung",pend:"Pendenzen Schiff",train:"Ausbildung",rep:"Rapport & Abrechnung",data:isAdmin()?"Stammdaten":"Mein Konto"}[S.ui.tab];
+ $("#app").innerHTML={time:viewTime,plan:viewPlan,pend:viewPend,train:viewTrain,rep:viewRep,data:viewData}[S.ui.tab]();
  const w=document.querySelector(".grid-wrap");
  if(w){if(scrollToday){const td=w.querySelector(".gh.td,.gc.td");if(td)w.scrollLeft=Math.max(0,td.offsetLeft-120);scrollToday=false}else w.scrollLeft=sl}
  if(S.ui.tab==="rep")fillReport();
@@ -307,7 +378,7 @@ function viewTime(){
   list=L2.map(x=>{let h="";if(x.date!==cur){cur=x.date;h=`<div class="day">${fmtS(x.date)}</div>`}
    return h+`<div class="it" data-a="editexp" data-id="${x.id}"><span class="dot" style="background:${locOf(x.loc).color}"></span><div class="g"><div class="t">${esc(catName(x.cat))}${x.r?"":`<span class="tag bad">Beleg fehlt</span>`}${x.rep?`<span class="tag ok">${esc(x.rep)}</span>`:""}</div><div class="muted">${S.ui.all?esc(empName(x.emp))+" · ":""}${esc(locOf(x.loc).name)} · ${x.paid==="firma"?"Firmenkarte":"privat ausgelegt"}${x.note?" · "+esc(x.note):""}</div></div><div class="v">CHF ${chf(x.amt)}</div></div>`}).join("")||`<div class="empty">Noch keine Spesen erfasst.</div>`;
  }
- return `<div class="card">${isAdmin()?`<div class="fld"><label>Mitarbeiter/in</label><select data-c="me">${opts(empOpts(),S.me)}</select></div>`:""}${timer}</div>
+ return `${isAdmin()?trainBanner():""}<div class="card">${isAdmin()?`<div class="fld"><label>Mitarbeiter/in</label><select data-c="me">${opts(empOpts(),S.me)}</select></div>`:""}${timer}</div>
  <div class="card"><div class="sum"><div class="muted">${MON[new Date().getMonth()]}<b>${chf(mh)} h</b></div><div class="muted">Spesen<b>CHF ${chf(mx)}</b></div></div>
  <div class="seg"><button class="${S.ui.sub==="zeit"?"on":""}" data-a="sub" data-s="zeit">Zeiten</button><button class="${S.ui.sub==="exp"?"on":""}" data-a="sub" data-s="exp">Spesen</button></div>
  <div class="btns"><button class="btn" data-a="${S.ui.sub==="zeit"?"newtime":"newexp"}">${S.ui.sub==="zeit"?"Zeit nachtragen":"Spesen erfassen"}</button>${isAdmin()?`<button class="chip ${S.ui.all?"on":""}" data-a="toggleall">Alle anzeigen</button>`:""}</div>
@@ -519,10 +590,12 @@ function viewData(){
  +sec("Standorte",S.locations.map(l=>`<div class="it" data-a="editloc" data-id="${l.id}"><span class="dot" style="background:${l.color}"></span><div class="g"><div class="t">${esc(l.name)}</div></div></div>`).join(""),"newloc")
  +sec("Tätigkeiten",S.activities.map(l=>`<div class="it" data-a="editact" data-id="${l.id}"><div class="g"><div class="t">${esc(l.name)}</div></div></div>`).join(""),"newact")
  +sec("Spesenarten",S.cats.map(l=>`<div class="it" data-a="editcat" data-id="${l.id}"><div class="g"><div class="t">${esc(l.name)}</div></div></div>`).join(""),"newcat")
+ +sec("Sicherheitsrollen",S.roles.map(l=>`<div class="it" data-a="editrole" data-id="${l.id}"><div class="g"><div class="t">${esc(l.name)}</div></div></div>`).join(""),"newrole")
+ +`<div class="card"><h2>Gemeinsamer Pendenzen-Code</h2><p class="muted">Alle Geräte müssen danach den neuen Code einmal eingeben.</p><form data-f="pcode">${fld("Neuer Code (mind. 6 Zeichen)",`<input type="password" name="pcode" autocomplete="off" autocapitalize="none" required>`)}<button class="btn sec" type="submit"${S.pcode?"":" disabled"}>Code ändern</button>${S.pcode?"":`<div class="muted">Zuerst im Tab «Pendenzen» verbinden.</div>`}</form></div>`
  +`<div class="card"><h2>Backup</h2><div class="btns"><button class="btn sec" data-a="expjson">Backup exportieren</button><button class="btn sec" data-a="impjson">Backup / Nacherfassung einlesen</button><button class="btn sec" data-a="demo">Beispieldaten laden</button><button class="btn bad" data-a="wipe">Alles löschen</button></div></div>`+viewAccount();
 }
 function simpleForm(kind,o){o=o||{};return `<form data-f="${kind}" data-id="${o.id||""}">${fld("Bezeichnung",`<input name="name" value="${esc(o.name||"")}" required>`)}${kind==="loc"?fld("Farbe im Plan",`<input type="color" name="color" value="${o.color||PAL[S.locations.length%PAL.length]}" style="padding:2px;height:44px">`):""}<div class="btns"><button class="btn" type="submit">Speichern</button>${o.id?`<button type="button" class="btn bad" data-a="del${kind}" data-id="${o.id}">Löschen</button>`:""}</div></form>`}
-function empForm(e){e=e||{};return `<form data-f="emp" data-id="${e.id||""}">${fld("Name",`<input name="name" value="${esc(e.name||"")}" required>`)}${fld("Kürzel (für den Plan)",`<input name="short" maxlength="8" value="${esc(e.short||"")}">`)}${fld("Stundenansatz CHF (optional)",`<input type="number" name="rate" step="0.05" min="0" inputmode="decimal" value="${e.rate||""}">`)}${fld("Neuer Code (mind. 4 Zeichen, leer = unverändert)",`<input type="password" name="pin" inputmode="numeric" autocomplete="new-password">`)}<div class="fld"><label><input type="checkbox" name="admin"${e.admin?" checked":""}> Administrator (sieht und ändert alles)</label></div><div class="fld"><label><input type="checkbox" name="inactive"${e.active===false?" checked":""}> inaktiv (keine Anmeldung, nicht in Auswahl und Plan)</label></div><div class="btns"><button class="btn" type="submit">Speichern</button>${e.id?`<button type="button" class="btn bad" data-a="delemp" data-id="${e.id}">Löschen</button>`:""}</div></form>`}
+function empForm(e){e=e||{};return `<form data-f="emp" data-id="${e.id||""}">${fld("Name",`<input name="name" value="${esc(e.name||"")}" required>`)}${fld("Kürzel (für den Plan)",`<input name="short" maxlength="8" value="${esc(e.short||"")}">`)}${fld("Stundenansatz CHF (optional)",`<input type="number" name="rate" step="0.05" min="0" inputmode="decimal" value="${e.rate||""}">`)}${fld("Neuer Code (mind. 4 Zeichen, leer = unverändert)",`<input type="password" name="pin" inputmode="numeric" autocomplete="new-password">`)}<div class="fld"><label><input type="checkbox" name="admin"${e.admin?" checked":""}> Administrator (sieht und ändert alles)</label></div><div class="fld"><label><input type="checkbox" name="crew"${e.crew!==false?" checked":""}> Besatzung (Rollenübungen Pflicht)</label></div><div class="fld"><label>Pflicht-Rollen dieser Person</label><div class="pick">${S.roles.map(r=>`<label><input type="checkbox" name="erole" value="${r.id}"${(!e.roles||e.roles.includes(r.id))?" checked":""}><span>${esc(r.name)}</span></label>`).join("")}</div></div><div class="fld"><label><input type="checkbox" name="inactive"${e.active===false?" checked":""}> inaktiv (keine Anmeldung, nicht in Auswahl und Plan)</label></div><div class="btns"><button class="btn" type="submit">Speichern</button>${e.id?`<button type="button" class="btn bad" data-a="delemp" data-id="${e.id}">Löschen</button>`:""}</div></form>`}
 function inUse(kind,id){const k={loc:["times","exps","assigns","blocks"],act:["times"],cat:["exps"]}[kind];return k.some(n=>S[n].some(x=>(kind==="loc"?x.loc:kind==="act"?x.act:x.cat)===id))}
 function demo(){
  const t=today(),m0=monthStart(t);const E=[["Anna Muster","AM",42],["Ben Beispiel","BB",38],["Chiara Test","CT",40],["Dario Demo","DD",45]].map(x=>({id:uid(),name:x[0],short:x[1],rate:x[2]}));
@@ -541,13 +614,25 @@ function demo(){
 
 /* ---------- Aktionen ---------- */
 const A={
+ dyear(e){S.ui.dy=dYear()+ +e.dataset.n;save();render()},
+ newdrill(){sheet("Übung erfassen",drillForm())},
+ editdrill(e){sheet("Übung bearbeiten",drillForm(byId(S.drills,e.dataset.id)))},
+ deldrill(e){const id=e.dataset.id;ask("Diese Übung löschen?","Löschen",()=>{S.drills=S.drills.filter(x=>x.id!==id);save();render()})},
+ person(e){const u=byId(S.employees,e.dataset.id);sheet(esc(u.name)+" · "+dYear(),personHTML(u,dYear()))},
+ season(){sheet("Saison "+dYear(),seasonForm(dYear()))},
+ pick(b){b.closest("form").querySelectorAll(`input[name=${b.dataset.n}]`).forEach(i=>i.checked=b.dataset.v==="1")},
+ dnach(){S.ui.dn=!S.ui.dn;save();render()},
+ dnexp(){dl(`Rollenuebungen_${dYear()}.html`,`<!doctype html><html lang="de-CH"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Nachweis Rollenübungen</title><style>body{margin:0;background:#eef2f4}${REPCSS}</style></head><body>${nachweisHTML(dYear())}</body></html>`,"text/html")},
+ newrole(){sheet("Sicherheitsrolle",simpleForm("role"))},
+ editrole(e){sheet("Sicherheitsrolle",simpleForm("role",byId(S.roles,e.dataset.id)))},
+ delrole(e){const id=e.dataset.id;if(S.drills.some(d=>d.roles.includes(id))||S.employees.some(x=>x.roles&&x.roles.includes(id))){toast("In Verwendung – kann nicht gelöscht werden");return}ask("Rolle löschen?","Löschen",()=>{S.roles=S.roles.filter(x=>x.id!==id);save();render()})},
  logout(){setUser(null);S.ui.tab="time";closeSheet();render()},
  pf(e){S.ui.pf=e.dataset.s;save();render()},
  newpend(){sheet("Pendenz erfassen",pendForm())},
  editpend(e){sheet("Pendenz bearbeiten",pendForm(byId(S.pend,e.dataset.id)))},
  async pdone(e){const x=byId(S.pend,e.dataset.id);try{await pendSave({id:x.id,text:x.text,who:x.who,prio:x.prio,date:x.date,done:x.done?"":today()})}catch(er){toast(pendErr(er));return}await syncPend()},
  prefresh(){syncPend().then(()=>toast(pendSync.err==="offline"?"Keine Verbindung":"Aktualisiert"))},
- delpend(e){const id=e.dataset.id;ask("Diese Pendenz löschen?","Löschen",async()=>{try{await rpc("pend_delete",{p_code:"",p_id:id})}catch(er){toast(pendErr(er));return}await syncPend()})},
+ delpend(e){const id=e.dataset.id;ask("Diese Pendenz löschen?","Löschen",async()=>{try{await rpc("pend_delete",{p_code:S.pcode,p_id:id})}catch(er){toast(pendErr(er));return}await syncPend()})},
  tab(e){S.ui.tab=e.dataset.t;if(S.ui.tab==="pend")syncPend();if(S.ui.tab==="plan")scrollToday=true;save();render();window.scrollTo(0,0)},
  close:closeSheet,
  askok(){const f=askCb;closeSheet();f&&f()},
@@ -593,7 +678,7 @@ const A={
  showrep(e){const r=byId(S.reports,e.dataset.id);rf().status=r.no;closeSheet();save();render();window.scrollTo(0,0)},
  reopen(e){const r=byId(S.reports,e.dataset.id);closeSheet();ask(`Abschluss von ${esc(r.no)} aufheben? Zeiten und Spesen werden wieder bearbeitbar.`,"Aufheben",()=>{S.times.forEach(x=>{if(x.rep===r.no)delete x.rep});S.exps.forEach(x=>{if(x.rep===r.no)delete x.rep});S.reports=S.reports.filter(x=>x.id!==r.id);if(rf().status===r.no)rf().status="open";save();render()})},
  newemp(){sheet("Mitarbeiter/in",empForm())},editemp(e){sheet("Mitarbeiter/in",empForm(byId(S.employees,e.dataset.id)))},
- delemp(e){const id=e.dataset.id;if(id===CU){toast("Das eigene Konto kann nicht gelöscht werden");return}const used=["times","exps","assigns","absences"].some(n=>S[n].some(x=>x.emp===id));if(used){toast("Hat Einträge – bitte auf inaktiv setzen");return}ask("Mitarbeiter/in löschen?","Löschen",()=>{S.employees=S.employees.filter(x=>x.id!==id);save();render()})},
+ delemp(e){const id=e.dataset.id;if(id===CU){toast("Das eigene Konto kann nicht gelöscht werden");return}const used=["times","exps","assigns","absences"].some(n=>S[n].some(x=>x.emp===id))||S.drills.some(d=>d.parts.includes(id)||d.lead===id);if(used){toast("Hat Einträge – bitte auf inaktiv setzen");return}ask("Mitarbeiter/in löschen?","Löschen",()=>{S.employees=S.employees.filter(x=>x.id!==id);save();render()})},
  newloc(){sheet("Standort",simpleForm("loc"))},editloc(e){sheet("Standort",simpleForm("loc",byId(S.locations,e.dataset.id)))},
  newact(){sheet("Tätigkeit",simpleForm("act"))},editact(e){sheet("Tätigkeit",simpleForm("act",byId(S.activities,e.dataset.id)))},
  newcat(){sheet("Spesenart",simpleForm("cat"))},editcat(e){sheet("Spesenart",simpleForm("cat",byId(S.cats,e.dataset.id)))},
@@ -635,7 +720,7 @@ document.addEventListener("submit",async e=>{
   try{const L=await rpc("pend_list",{p_code:c});S.pcode=c;S.pend=L.map(pmap);pendSync.at=nowT();pendSync.err="";save();render()}
   catch(er){bad(pendErr(er))}
   return}
- if(["assign","abs","block","emp","loc","act","cat","pcode"].includes(k)&&!isAdmin())return;
+ if(["assign","abs","block","emp","loc","act","cat","pcode","drill","season","role"].includes(k)&&!isAdmin())return;
  if(k==="time"){
   if(v("s")===v("e")){$("#calc").textContent="Von und Bis sind gleich.";return}
   const o={emp:isAdmin()?v("emp"):CU,date:v("date"),s:v("s"),e:v("e"),b:+v("b")||0,loc:v("loc"),act:v("act"),note:v("note").trim()};
@@ -653,7 +738,7 @@ document.addEventListener("submit",async e=>{
   if(k==="abs"){const o={emp:v("emp"),type:v("type"),from:v("from"),to:v("to"),note:v("note").trim()};if(id)Object.assign(byId(S.absences,id),o);else S.absences.push(Object.assign({id:uid()},o))}
   if(k==="block"){const o={label:v("label").trim(),from:v("from"),to:v("to"),loc:v("loc"),emp:v("emp")};if(id)Object.assign(byId(S.blocks,id),o);else S.blocks.push(Object.assign({id:uid()},o))}
  }else if(k==="emp"){
-  const o={name:v("name").trim(),short:v("short").trim()||v("name").trim().split(/\s+/).map(p=>p[0]).join("").toUpperCase(),rate:+v("rate")||0,active:!f.elements.inactive.checked,admin:f.elements.admin.checked};
+  const o={name:v("name").trim(),short:v("short").trim()||v("name").trim().split(/\s+/).map(p=>p[0]).join("").toUpperCase(),rate:+v("rate")||0,active:!f.elements.inactive.checked,admin:f.elements.admin.checked,crew:f.elements.crew.checked,roles:(()=>{const rs=[...f.querySelectorAll("[name=erole]:checked")].map(i=>i.value);return rs.length===S.roles.length?undefined:rs})()};
   const pin=v("pin");if(pin&&pin.length<4){toast("Code: mindestens 4 Zeichen");return}
   let u=id?byId(S.employees,id):null;
   const after=S.employees.map(x=>x.id===id?Object.assign({},x,o,pin?{pin:"x"}:{}):x);if(!u)after.push(Object.assign({},o,{pin:pin?"x":""}));
@@ -673,6 +758,17 @@ document.addEventListener("submit",async e=>{
   const n=v("pcode").trim();if(n.length<6){toast("Mindestens 6 Zeichen");return}
   try{await rpc("pend_set_code",{p_old:S.pcode,p_new:n})}catch(er){toast(pendErr(er));return}
   S.pcode=n;
+ }else if(k==="drill"){
+  const roles=[...f.querySelectorAll("[name=role]:checked")].map(i=>i.value),parts=[...f.querySelectorAll("[name=part]:checked")].map(i=>i.value);
+  if(!roles.length||!parts.length){bad("Bitte mindestens eine Rolle und eine Person wählen.");return}
+  const o={date:v("date"),loc:v("loc"),lead:v("lead"),note:v("note").trim(),roles,parts};
+  if(id)Object.assign(byId(S.drills,id),o);else S.drills.push(Object.assign({id:uid()},o));
+ }else if(k==="season"){
+  if(v("end")<=v("start")){toast("Saisonende muss nach dem Beginn liegen");return}
+  (S.seasons=S.seasons||{})[f.dataset.y]={start:v("start"),end:v("end")};
+ }else if(k==="role"){
+  const nm=v("name").trim();const x=id?byId(S.roles,id):null;
+  if(x){x.name=nm;if(!x.short)x.short=nm.slice(0,6)}else S.roles.push({id:uid(),name:nm,short:nm.slice(0,6)});
  }else if(k==="loc"||k==="act"||k==="cat"){
   const key={loc:"locations",act:"activities",cat:"cats"}[k];const o={name:v("name").trim()};if(k==="loc")o.color=v("color");
   if(id)Object.assign(byId(S[key],id),o);else S[key].push(Object.assign({id:uid()},o));
@@ -680,6 +776,7 @@ document.addEventListener("submit",async e=>{
  save();closeSheet();render();toast("Gespeichert");
 });
 if(!S.ui.tab)S.ui.tab="time";
+rpc("keepalive",{}).catch(()=>{});
 render();
 if(CU&&S.ui.tab==="pend")syncPend();
 </script>
