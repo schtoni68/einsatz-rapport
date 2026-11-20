@@ -1,0 +1,29 @@
+name: Supabase keepalive
+
+# Haelt das kostenlose Supabase-Projekt wach (Pause nach ca. 7 Tagen ohne Zugriff)
+# und sorgt dafuer, dass GitHub diesen geplanten Ablauf nicht selbst abschaltet.
+on:
+  schedule:
+    - cron: "17 5 * * 1,4"   # montags und donnerstags, 05:17 UTC
+  workflow_dispatch:          # zum manuellen Testen ("Run workflow")
+
+permissions:
+  actions: write
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Datenbank anpingen
+        env:
+          KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd1aXR1dXRudW5wZXBxem9yZG9jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTUxODg5NTgsImV4cCI6MjExMDc2NDk1OH0.mU25ljg828mP1Ivu4lzuDhxuQIv24Iy3iLz_BUkCUOg
+        run: |
+          curl -fsS -X POST "https://guituutnunpepqzordoc.supabase.co/rest/v1/rpc/keepalive" \
+            -H "apikey: $KEY" \
+            -H "Authorization: Bearer $KEY" \
+            -H "Content-Type: application/json" \
+            -d '{}'
+      - name: Ablauf aktiv halten
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X PUT "repos/${{ github.repository }}/actions/workflows/keepalive.yml/enable"
