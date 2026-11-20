@@ -183,7 +183,7 @@ const DEF=()=>({v:1,company:"Berner Oberland Charterschiff AG",me:"",
  ui:{tab:"time",sub:"zeit",all:false,planStart:today().slice(0,7),span:1,rf:null,pf:"open",dy:null,dn:false}});
 function load(){try{const r=localStorage.getItem(KEY);return r?JSON.parse(r):null}catch(e){return null}}
 let S=Object.assign(DEF(),load()||{});
-S.ui=Object.assign(DEF().ui,S.ui||{});
+S.ui=Object.assign(DEF().ui,S.ui||{});delete S.pcode;
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){toast("Speichern im Browser nicht möglich")}}
 const idb={db:null,mem:{},
  async open(){if(this.db)return this.db;try{this.db=await new Promise((res,rej)=>{const r=indexedDB.open("bocsag-belege",1);r.onupgradeneeded=()=>r.result.createObjectStore("r");r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}catch(e){this.db=null}return this.db},
@@ -251,17 +251,16 @@ async function rpc(fn,args){
 const pmap=r=>({id:r.id,nr:r.nr,date:r.erfasst,text:r.text,who:r.wer,prio:r.prio,done:r.erledigt||""});
 const pendSync={at:"",err:"",busy:false};
 async function syncPend(){
- if(!S.pcode||pendSync.busy)return;pendSync.busy=true;
- try{const L=await rpc("pend_list",{p_code:S.pcode});S.pend=L.map(pmap);pendSync.at=nowT();pendSync.err="";save()}
- catch(e){if(e.code==="28000"){S.pcode="";save();pendSync.err="code"}else pendSync.err="offline"}
+ if(pendSync.busy)return;pendSync.busy=true;
+ try{const L=await rpc("pend_list",{p_code:""});S.pend=L.map(pmap);pendSync.at=nowT();pendSync.err="";save()}
+ catch(e){pendSync.err="offline"}
  pendSync.busy=false;if(CU&&S.ui.tab==="pend"&&$("#sheet").hidden)render()}
-const pendErr=e=>e.code==="28000"?"Zugangscode falsch":e.offline?"Keine Verbindung – nicht gespeichert":"Fehler: "+e.message;
-const pendSave=o=>rpc("pend_save",{p_code:S.pcode,p_id:o.id||null,p_text:o.text,p_wer:o.who||"",p_prio:o.prio||"",p_erfasst:o.date||today(),p_erledigt:o.done||null});
+const pendErr=e=>e.offline?"Keine Verbindung – nicht gespeichert":e.code==="53400"?"Maximale Anzahl Pendenzen erreicht":"Fehler: "+e.message;
+const pendSave=o=>rpc("pend_save",{p_code:"",p_id:o.id||null,p_text:o.text,p_wer:o.who||"",p_prio:o.prio||"",p_erfasst:o.date||today(),p_erledigt:o.done||null});
 setInterval(()=>{if(CU&&S.ui.tab==="pend"&&$("#sheet").hidden)syncPend()},60000);
 
 /* ---------- Pendenzen ---------- */
 function viewPend(){
- if(!S.pcode)return `<div class="card"><h2>Gemeinsame Liste</h2><p class="muted">Die Pendenzenliste ist für alle gleich. Gib den gemeinsamen Zugangscode ein (einmal pro Gerät).</p>${pendSync.err==="code"?`<div class="warn">Der Code wurde geändert oder ist falsch.</div>`:""}<form data-f="pcodein">${fld("Zugangscode",`<input type="password" name="pcode" autocomplete="off" autocapitalize="none" required>`)}<div id="warn"></div><button class="btn full" type="submit">Verbinden</button></form></div>`;
  const f=S.ui.pf||"open";const open=S.pend.filter(x=>!x.done).length;const PR={hoch:0,mittel:1,tief:2};const PT={hoch:"Hoch",mittel:"Mittel",tief:"Tief"};
  const L=S.pend.filter(x=>f==="all"||(f==="open"?!x.done:!!x.done));
  L.sort((a,b)=>(f==="done"?0:(PR[a.prio]??3)-(PR[b.prio]??3))||a.nr-b.nr);
@@ -271,7 +270,7 @@ function viewPend(){
  <div class="btns"><button class="btn" data-a="newpend">Pendenz erfassen</button><button class="btn sec" data-a="prefresh">Aktualisieren</button></div><div class="muted" style="margin-bottom:6px">${pendSync.err==="offline"?"Offline – letzter bekannter Stand":pendSync.at?"Stand "+pendSync.at+" Uhr":"Wird geladen …"}</div><div class="list">${rows}</div></div>`}
 function pendForm(x){x=x||{};return `<form data-f="pend" data-id="${x.id||""}">
  ${fld("Beschreibung",`<textarea name="text" rows="3" required>${esc(x.text||"")}</textarea>`)}
- ${fld("Ausführung durch",`<input name="who" value="${esc(x.who||"")}" placeholder="Firma oder Funktion, z. B. Werft"><div class="muted">Bitte keine Privatpersonen eintragen. Die Liste liegt auf einem gemeinsamen Server.</div>`)}
+ ${fld("Ausführung durch",`<input name="who" value="${esc(x.who||"")}" placeholder="Firma oder Funktion, z. B. Werft"><div class="muted">Bitte keine Privatpersonen eintragen. Die Liste liegt auf einem gemeinsamen Server und ist ohne Code zugänglich.</div>`)}
  <div class="row2">${fld("Priorität",`<select name="prio">${[["","–"],["hoch","Hoch"],["mittel","Mittel"],["tief","Tief"]].map(p=>`<option value="${p[0]}"${p[0]===(x.prio||"")?" selected":""}>${p[1]}</option>`).join("")}</select>`)}${fld("Erfasst am",`<input type="date" name="date" value="${x.date||today()}" required>`)}</div>
  <div class="fld"><label><input type="checkbox" name="done"${x.done?" checked":""}> Erledigt${x.done?" am "+fmtD(x.done):""}</label></div>
  <div class="btns"><button class="btn" type="submit">Speichern</button>${x.id&&isAdmin()?`<button type="button" class="btn bad" data-a="delpend" data-id="${x.id}">Löschen</button>`:""}</div></form>`}
@@ -591,7 +590,6 @@ function viewData(){
  +sec("Tätigkeiten",S.activities.map(l=>`<div class="it" data-a="editact" data-id="${l.id}"><div class="g"><div class="t">${esc(l.name)}</div></div></div>`).join(""),"newact")
  +sec("Spesenarten",S.cats.map(l=>`<div class="it" data-a="editcat" data-id="${l.id}"><div class="g"><div class="t">${esc(l.name)}</div></div></div>`).join(""),"newcat")
  +sec("Sicherheitsrollen",S.roles.map(l=>`<div class="it" data-a="editrole" data-id="${l.id}"><div class="g"><div class="t">${esc(l.name)}</div></div></div>`).join(""),"newrole")
- +`<div class="card"><h2>Gemeinsamer Pendenzen-Code</h2><p class="muted">Alle Geräte müssen danach den neuen Code einmal eingeben.</p><form data-f="pcode">${fld("Neuer Code (mind. 6 Zeichen)",`<input type="password" name="pcode" autocomplete="off" autocapitalize="none" required>`)}<button class="btn sec" type="submit"${S.pcode?"":" disabled"}>Code ändern</button>${S.pcode?"":`<div class="muted">Zuerst im Tab «Pendenzen» verbinden.</div>`}</form></div>`
  +`<div class="card"><h2>Backup</h2><div class="btns"><button class="btn sec" data-a="expjson">Backup exportieren</button><button class="btn sec" data-a="impjson">Backup / Nacherfassung einlesen</button><button class="btn sec" data-a="demo">Beispieldaten laden</button><button class="btn bad" data-a="wipe">Alles löschen</button></div></div>`+viewAccount();
 }
 function simpleForm(kind,o){o=o||{};return `<form data-f="${kind}" data-id="${o.id||""}">${fld("Bezeichnung",`<input name="name" value="${esc(o.name||"")}" required>`)}${kind==="loc"?fld("Farbe im Plan",`<input type="color" name="color" value="${o.color||PAL[S.locations.length%PAL.length]}" style="padding:2px;height:44px">`):""}<div class="btns"><button class="btn" type="submit">Speichern</button>${o.id?`<button type="button" class="btn bad" data-a="del${kind}" data-id="${o.id}">Löschen</button>`:""}</div></form>`}
@@ -632,7 +630,7 @@ const A={
  editpend(e){sheet("Pendenz bearbeiten",pendForm(byId(S.pend,e.dataset.id)))},
  async pdone(e){const x=byId(S.pend,e.dataset.id);try{await pendSave({id:x.id,text:x.text,who:x.who,prio:x.prio,date:x.date,done:x.done?"":today()})}catch(er){toast(pendErr(er));return}await syncPend()},
  prefresh(){syncPend().then(()=>toast(pendSync.err==="offline"?"Keine Verbindung":"Aktualisiert"))},
- delpend(e){const id=e.dataset.id;ask("Diese Pendenz löschen?","Löschen",async()=>{try{await rpc("pend_delete",{p_code:S.pcode,p_id:id})}catch(er){toast(pendErr(er));return}await syncPend()})},
+ delpend(e){const id=e.dataset.id;ask("Diese Pendenz löschen?","Löschen",async()=>{try{await rpc("pend_delete",{p_code:"",p_id:id})}catch(er){toast(pendErr(er));return}await syncPend()})},
  tab(e){S.ui.tab=e.dataset.t;if(S.ui.tab==="pend")syncPend();if(S.ui.tab==="plan")scrollToday=true;save();render();window.scrollTo(0,0)},
  close:closeSheet,
  askok(){const f=askCb;closeSheet();f&&f()},
@@ -700,7 +698,7 @@ document.addEventListener("change",async e=>{
  if(t.name==="rcpt"&&t.files[0]){try{pendingR=await resizeImage(t.files[0]);$("#rprev").innerHTML=`<img class="prev" src="${pendingR}" alt="Vorschau">`}catch(x){toast("Bild konnte nicht gelesen werden")}return}
  if(t.id==="impf"&&t.files[0]){const rd=new FileReader();rd.onload=()=>{try{const j=JSON.parse(rd.result);if(!j.S||j.app!=="bocsag-einsatz")throw 0;
   if(j.merge)ask("Nacherfassung einlesen? Fehlende Einträge werden ergänzt, Bestehendes bleibt unverändert.","Einlesen",()=>{const n=mergeIn(j.S);save();render();toast(n+" Einträge ergänzt")});
-  else ask("Backup einlesen? Die aktuellen Daten auf diesem Gerät werden ersetzt.","Einlesen",async()=>{S=Object.assign(DEF(),j.S);S.ui=Object.assign(DEF().ui,S.ui||{});for(const [k,v] of Object.entries(j.receipts||{}))await idb.put(k,v);if(CU&&!byId(S.employees,CU))setUser(null);save();render();toast("Backup eingelesen")})
+  else ask("Backup einlesen? Die aktuellen Daten auf diesem Gerät werden ersetzt.","Einlesen",async()=>{S=Object.assign(DEF(),j.S);S.ui=Object.assign(DEF().ui,S.ui||{});delete S.pcode;for(const [k,v] of Object.entries(j.receipts||{}))await idb.put(k,v);if(CU&&!byId(S.employees,CU))setUser(null);save();render();toast("Backup eingelesen")})
  }catch(x){toast("Datei ist kein gültiges Backup")}};rd.readAsText(t.files[0]);t.value=""}
 });
 document.addEventListener("submit",async e=>{
@@ -715,12 +713,7 @@ document.addEventListener("submit",async e=>{
   const pin=v("pin");if(pin.length<4||pin!==v("pin2")){bad("Die Codes stimmen nicht überein oder sind kürzer als 4 Zeichen.");return}
   let u;if(v("who"))u=byId(S.employees,v("who"));else{const nm=v("name").trim();if(!nm){bad("Bitte einen Namen eingeben.");return}u={id:uid(),name:nm,short:nm.split(/\s+/).map(q=>q[0]).join("").toUpperCase(),rate:0,active:true};S.employees.push(u)}
   u.admin=true;u.active=true;await setPin(u,pin);save();setUser(u.id);render();return}
- if(k==="pcodein"){
-  const c=v("pcode").trim();
-  try{const L=await rpc("pend_list",{p_code:c});S.pcode=c;S.pend=L.map(pmap);pendSync.at=nowT();pendSync.err="";save();render()}
-  catch(er){bad(pendErr(er))}
-  return}
- if(["assign","abs","block","emp","loc","act","cat","pcode","drill","season","role"].includes(k)&&!isAdmin())return;
+ if(["assign","abs","block","emp","loc","act","cat","drill","season","role"].includes(k)&&!isAdmin())return;
  if(k==="time"){
   if(v("s")===v("e")){$("#calc").textContent="Von und Bis sind gleich.";return}
   const o={emp:isAdmin()?v("emp"):CU,date:v("date"),s:v("s"),e:v("e"),b:+v("b")||0,loc:v("loc"),act:v("act"),note:v("note").trim()};
@@ -754,10 +747,6 @@ document.addEventListener("submit",async e=>{
   const x=id?byId(S.pend,id):null;o.done=dn?((x&&x.done)||today()):"";if(x)o.id=x.id;
   try{await pendSave(o)}catch(er){toast(pendErr(er));return}
   await syncPend();
- }else if(k==="pcode"){
-  const n=v("pcode").trim();if(n.length<6){toast("Mindestens 6 Zeichen");return}
-  try{await rpc("pend_set_code",{p_old:S.pcode,p_new:n})}catch(er){toast(pendErr(er));return}
-  S.pcode=n;
  }else if(k==="drill"){
   const roles=[...f.querySelectorAll("[name=role]:checked")].map(i=>i.value),parts=[...f.querySelectorAll("[name=part]:checked")].map(i=>i.value);
   if(!roles.length||!parts.length){bad("Bitte mindestens eine Rolle und eine Person wählen.");return}
